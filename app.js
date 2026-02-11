@@ -57,7 +57,7 @@ salami: {
   label: "Salami",
   icon: "./assets/icons/salami.png",
   pieceImgs: ["./assets/pieces/salami_1.png"],
-  pieceCount: 7,
+  pieceCount: 8,
   scaleMin: 0.07,
   scaleMax: 0.07,
   spread: 0.95, 
@@ -769,6 +769,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
