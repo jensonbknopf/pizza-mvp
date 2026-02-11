@@ -12,15 +12,15 @@ const TOPPING_PRICE = 0.50;
 
 // ---------- Toppings ----------
 const TOPPINGS = {
-  cheese:    { label: "Käse",      icon: "./assets/icons/cheese.png",    pieceImgs: ["./assets/pieces/cheese_1.png"],    pieceCount: 55 },
-  pepper:    { label: "Paprika",   icon: "./assets/icons/pepper.png",    pieceImgs: ["./assets/pieces/pepper_1.png"],    pieceCount: 35 },
-  mushrooms: { label: "Pilze",     icon: "./assets/icons/mushrooms.png", pieceImgs: ["./assets/pieces/mushrooms_1.png"], pieceCount: 26 },
-  garlic:    { label: "Knoblauch", icon: "./assets/icons/garlic.png",    pieceImgs: ["./assets/pieces/garlic_1.png"],    pieceCount: 18 },
-  salami:    { label: "Salami",    icon: "./assets/icons/salami.png",    pieceImgs: ["./assets/pieces/salami_1.png"],    pieceCount: 16 },
-  corn:      { label: "Mais",      icon: "./assets/icons/corn.png",      pieceImgs: ["./assets/pieces/corn_1.png"],      pieceCount: 40 },
+  cheese:    { label: "Käse",      icon: "/icons/cheese.png",    pieceImgs: ["assets/pieces/cheese_1.png"],    pieceCount: 55 },
+  pepper:    { label: "Paprika",   icon: "assets/icons/pepper.png",    pieceImgs: ["assets/pieces/pepper_1.png"],    pieceCount: 35 },
+  mushrooms: { label: "Pilze",     icon: "assets/icons/mushrooms.png", pieceImgs: ["assets/pieces/mushrooms_1.png"], pieceCount: 26 },
+  garlic:    { label: "Knoblauch", icon: "assets/icons/garlic.png",    pieceImgs: ["assets/pieces/garlic_1.png"],    pieceCount: 18 },
+  salami:    { label: "Salami",    icon: "assets/icons/salami.png",    pieceImgs: ["assets/pieces/salami_1.png"],    pieceCount: 16 },
+  corn:      { label: "Mais",      icon: "assets/icons/corn.png",      pieceImgs: ["assets/pieces/corn_1.png"],      pieceCount: 40 },
 };
 
-const BASE_IMG = "./assets/base/pizza_base_sauce.png";
+const BASE_IMG = "assets/base/pizza_base_sauce.png";
 
 
 // ---------- State ----------
@@ -510,7 +510,7 @@ setTimeout(async () => {
 
   } catch (e) {
     console.error(e);
-    hint.textContent = "Fehlende Assets? Prüfe assets/base/pizza_base_sauce.png";
+    hint.textContent = "Fehlende ? Prüfe /base/pizza_base_sauce.png";
   }
 
   updatePrice();
@@ -520,6 +520,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
