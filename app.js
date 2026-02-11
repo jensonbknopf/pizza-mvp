@@ -29,6 +29,7 @@ pepper: {
   pieceCount: 6,
   scaleMin: 0.7,
   scaleMax: 0.8
+  spread: 0.85, rim: 0.25
 },
 
 mushrooms: {
@@ -38,6 +39,7 @@ mushrooms: {
   pieceCount: 15,
   scaleMin: 0.05,
   scaleMax: 0.07
+  spread: 0.80, rim: 0.20
 },
 
 garlic: {
@@ -47,6 +49,7 @@ garlic: {
   pieceCount: 18,
   scaleMin: 0.015,
   scaleMax: 0.02
+  spread: 0.65, rim: 0.30 // darf ruhig etwas clusterig
 },
 
 salami: {
@@ -56,6 +59,7 @@ salami: {
   pieceCount: 7,
   scaleMin: 0.07,
   scaleMax: 0.07
+  spread: 0.90, rim: 0.35
 },
 
 corn: {
@@ -65,6 +69,7 @@ corn: {
   pieceCount: 65,
   scaleMin: 0.065,
   scaleMax: 0.075
+  spread: 0.70, rim: 0.10 // Mais klumpt oft leicht
 }
 };
 
@@ -124,6 +129,44 @@ function isInsideCircle(x, y, cx, cy, r) {
   const dx = x - cx;
   const dy = y - cy;
   return (dx*dx + dy*dy) <= (r*r);
+}
+
+function generateTargetsTuned(cx, cy, radius, count, spread = 0.8, rim = 0.2) {
+  const usableR = radius * (1 - 0.22 * rim);
+
+  const area = Math.PI * usableR * usableR;
+  const base = Math.sqrt(area / Math.max(1, count));
+  const minDist = Math.max(4, base * (0.15 + 0.55 * spread));
+
+  const pts = [];
+  const maxAttempts = count * (20 + Math.floor(60 * spread));
+
+  let attempts = 0;
+  while (pts.length < count && attempts < maxAttempts) {
+    attempts++;
+
+    const p = randomPointInCircle(cx, cy, usableR);
+
+    let ok = true;
+    for (let i = 0; i < pts.length; i++) {
+      const dx = p.x - pts[i].x;
+      const dy = p.y - pts[i].y;
+      if (dx * dx + dy * dy < minDist * minDist) {
+        ok = false;
+        break;
+      }
+    }
+
+    if (!ok && Math.random() < (1 - spread) * 0.55) ok = true;
+
+    if (ok) pts.push(p);
+  }
+
+  while (pts.length < count) {
+    pts.push(randomPointInCircle(cx, cy, usableR));
+  }
+
+  return pts;
 }
 
 function generateEvenPointsInCircle(cx, cy, radius, count) {
@@ -324,6 +367,18 @@ if (conf.centered) {
   conf.pieceCount
   );
 
+  const spread = conf.spread ?? 0.8;
+  const rim = conf.rim ?? 0.2;
+
+  const targets = generateTargetsTuned(
+    pizza.cx,
+    pizza.cy,
+    safeRadius,
+    conf.pieceCount,
+    spread,
+    rim
+  );
+  
   for (let i = 0; i < conf.pieceCount; i++) {
     const imgSrc = conf.pieceImgs[Math.floor(Math.random() * conf.pieceImgs.length)];
     const img = await loadImage(imgSrc);
@@ -673,6 +728,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
