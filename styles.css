@@ -164,3 +164,35 @@ body{
 }
 .toppingCard.active .trashBtn{ display:flex; }
 
+/* verhindert Mini-Spalt unten auf Mobile */
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Der App-Container füllt wirklich den Screen */
+.main{
+  height: 100dvh;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+
+/* Tray bekommt feste Höhe + safe-area */
+.tray{
+  flex: 0 0 auto;
+  padding-bottom: calc(10px + env(safe-area-inset-bottom) + 8px); /* +8px Puffer */
+}
+
+/* Bühne nimmt den Rest, ohne Pixel-Fehler */
+.stageWrap{
+  flex: 1 1 auto;
+  min-height: 0; /* wichtig für flex */
+}
+
+/* Container wirklich komplett füllen */
+.stageContainer{
+  height: 100%;
+}
+
+
