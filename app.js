@@ -573,13 +573,29 @@ let resizeTimer = null;
 
 async function handleResize() {
   if (!stage) return;
+
   const { w, h } = getStageSize();
   stage.size({ width: w, height: h });
 
-  // Pizza neu positionieren
+  // Pizza neu zeichnen (berechnet baseBox neu)
   await drawPizzaBase();
 
-  // Hinweis neu zentrieren (DOM macht das)
+  // Wenn Käse aktiv ist → neu positionieren
+  if (activeToppings.has("cheese")) {
+    const cheeseNodes = toppingNodes.get("cheese");
+
+    if (cheeseNodes && cheeseNodes.length > 0) {
+      const node = cheeseNodes[0];
+      const { x, y, w, h } = pizza.baseBox;
+
+      node.position({ x, y });
+      node.width(w);
+      node.height(h);
+
+      cheeseLayer.draw();
+    }
+  }
+
   baseLayer.draw();
   toppingLayer.draw();
   uiLayer.draw();
@@ -616,6 +632,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
