@@ -12,14 +12,16 @@ const TOPPING_PRICE = 0.50;
 
 // ---------- Toppings ----------
 const TOPPINGS = {
-  cheese: {
-    label: "Käse",
-    icon: "./assets/icons/cheese.png",
-    pieceImgs: ["./assets/pieces/cheese_1.png"],
-    pieceCount: 1,
-    scaleMin: 0.22,
-    scaleMax: 0.40
-  },
+cheese: {
+  label: "Käse",
+  icon: "./assets/icons/cheese.png",
+  pieceImgs: ["./assets/pieces/cheese_1.png"],
+  pieceCount: 1,
+  scaleMin: 0.8,
+  scaleMax: 0.8,
+  centered: true
+},
+
 
   pepper: {
     label: "Paprika",
@@ -575,6 +577,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
