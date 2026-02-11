@@ -594,9 +594,9 @@ function moveDrag(pointerX, pointerY) {
 async function endDrag(pointerX, pointerY) {
   if (!dragGhost || !draggingKey) return;
 
-  // Kleine “hochschieben”-Illusion: wir nehmen die Drop-Position leicht oberhalb
-  const dropX = pointerX;
-  const dropY = pointerY - 10;
+  const ghostPos = dragGhost.position();
+  const dropX = ghostPos.x;
+  const dropY = ghostPos.y - 10;
 
   const inside = isInsideCircle(dropX, dropY, pizza.cx, pizza.cy, pizza.radius * 0.98);
 
@@ -836,6 +836,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
