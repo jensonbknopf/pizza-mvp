@@ -466,7 +466,7 @@ function buildTray() {
     card.appendChild(price);
 
     // ---- Long-press / Lock Drag ----
-    card.addEventListener("pointerdown", async (ev) => {
+    card.addEventListener("pointerdown", (ev) => {
       if (ev.target && ev.target.classList.contains("trashBtn")) return;
 
       pendingKey = key;
@@ -606,6 +606,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
