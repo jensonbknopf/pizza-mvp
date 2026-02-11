@@ -12,12 +12,59 @@ const TOPPING_PRICE = 0.50;
 
 // ---------- Toppings ----------
 const TOPPINGS = {
-  cheese:    { label: "Käse",      icon: "./assets/icons/cheese.png",    pieceImgs: ["./assets/pieces/cheese_1.png"],    pieceCount: 100 },
-  pepper:    { label: "Paprika",   icon: "./assets/icons/pepper.png",    pieceImgs: ["./assets/pieces/pepper_1.png"],    pieceCount: 35 },
-  mushrooms: { label: "Pilze",     icon: "./assets/icons/mushrooms.png", pieceImgs: ["./assets/pieces/mushrooms_1.png"], pieceCount: 10 },
-  garlic:    { label: "Knoblauch", icon: "./assets/icons/garlic.png",    pieceImgs: ["./assets/pieces/garlic_1.png"],    pieceCount: 18 },
-  salami:    { label: "Salami",    icon: "./assets/icons/salami.png",    pieceImgs: ["./assets/pieces/salami_1.png"],    pieceCount: 5 },
-  corn:      { label: "Mais",      icon: "./assets/icons/corn.png",      pieceImgs: ["./assets/pieces/corn_1.png"],      pieceCount: 40 },
+  cheese: {
+    label: "Käse",
+    icon: "./assets/icons/cheese.png",
+    pieceImgs: ["./assets/pieces/cheese_1.png"],
+    pieceCount: 70,
+    scaleMin: 0.22,
+    scaleMax: 0.40
+  },
+
+  pepper: {
+    label: "Paprika",
+    icon: "./assets/icons/pepper.png",
+    pieceImgs: ["./assets/pieces/pepper_1.png"],
+    pieceCount: 45,
+    scaleMin: 0.30,
+    scaleMax: 0.50
+  },
+
+  mushrooms: {
+    label: "Pilze",
+    icon: "./assets/icons/mushrooms.png",
+    pieceImgs: ["./assets/pieces/mushrooms_1.png"],
+    pieceCount: 22,
+    scaleMin: 0.45,
+    scaleMax: 0.65
+  },
+
+  garlic: {
+    label: "Knoblauch",
+    icon: "./assets/icons/garlic.png",
+    pieceImgs: ["./assets/pieces/garlic_1.png"],
+    pieceCount: 28,
+    scaleMin: 0.18,
+    scaleMax: 0.30
+  },
+
+  salami: {
+    label: "Salami",
+    icon: "./assets/icons/salami.png",
+    pieceImgs: ["./assets/pieces/salami_1.png"],
+    pieceCount: 14,
+    scaleMin: 0.55,
+    scaleMax: 0.75
+  },
+
+  corn: {
+    label: "Mais",
+    icon: "./assets/icons/corn.png",
+    pieceImgs: ["./assets/pieces/corn_1.png"],
+    pieceCount: 65,
+    scaleMin: 0.16,
+    scaleMax: 0.28
+  }
 };
 
 const BASE_IMG = "./assets/base/pizza_base_sauce.png";
@@ -527,6 +574,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
