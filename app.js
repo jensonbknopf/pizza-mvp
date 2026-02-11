@@ -26,9 +26,9 @@ pepper: {
   label: "Paprika",
   icon: "./assets/icons/pepper.png",
   pieceImgs: ["./assets/pieces/pepper_1.png"],
-  pieceCount: 7,
-  scaleMin: 0.1,
-  scaleMax: 0.1
+  pieceCount: 6,
+  scaleMin: 0.7,
+  scaleMax: 0.8
 },
 
 mushrooms: {
@@ -36,8 +36,8 @@ mushrooms: {
   icon: "./assets/icons/mushrooms.png",
   pieceImgs: ["./assets/pieces/mushrooms_1.png"],
   pieceCount: 15,
-  scaleMin: 0.055,
-  scaleMax: 0.065
+  scaleMin: 0.05,
+  scaleMax: 0.07
 },
 
 garlic: {
@@ -45,8 +45,8 @@ garlic: {
   icon: "./assets/icons/garlic.png",
   pieceImgs: ["./assets/pieces/garlic_1.png"],
   pieceCount: 18,
-  scaleMin: 0.025,
-  scaleMax: 0.03
+  scaleMin: 0.015,
+  scaleMax: 0.02
 },
 
 salami: {
@@ -54,8 +54,8 @@ salami: {
   icon: "./assets/icons/salami.png",
   pieceImgs: ["./assets/pieces/salami_1.png"],
   pieceCount: 7,
-  scaleMin: 0.08,
-  scaleMax: 0.08
+  scaleMin: 0.07,
+  scaleMax: 0.07
 },
 
 corn: {
@@ -673,6 +673,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
