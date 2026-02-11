@@ -30,7 +30,7 @@ pepper: {
   scaleMin: 0.07,
   scaleMax: 0.08,
   spread: 0.85, 
-  rim: 0.25
+  rim: 0.2
 },
 
 mushrooms: {
@@ -41,7 +41,7 @@ mushrooms: {
   scaleMin: 0.05,
   scaleMax: 0.07,
   spread: 0.80, 
-  rim: 0.20
+  rim: 0.3
 },
 
 garlic: {
@@ -52,7 +52,7 @@ garlic: {
   scaleMin: 0.015,
   scaleMax: 0.02,
   spread: 0.9, 
-  rim: 0.30 // darf ruhig etwas clusterig
+  rim: 0.15 // darf ruhig etwas clusterig
 },
 
 salami: {
@@ -63,7 +63,7 @@ salami: {
   scaleMin: 0.07,
   scaleMax: 0.07,
   spread: 0.90, 
-  rim: 0.35
+  rim: 0.5
 },
 
 corn: {
@@ -74,7 +74,7 @@ corn: {
   scaleMin: 0.065,
   scaleMax: 0.075,
   spread: 0.70, 
-  rim: 0.10 // Mais klumpt oft leicht
+  rim: 0.15 // Mais klumpt oft leicht
 }
 };
 
@@ -726,6 +726,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
