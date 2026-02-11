@@ -29,7 +29,8 @@ pepper: {
   pieceCount: 6,
   scaleMin: 0.07,
   scaleMax: 0.08,
-  spread: 0.85, rim: 0.25
+  spread: 0.85, 
+  rim: 0.25
 },
 
 mushrooms: {
@@ -39,7 +40,8 @@ mushrooms: {
   pieceCount: 15,
   scaleMin: 0.05,
   scaleMax: 0.07,
-  spread: 0.80, rim: 0.20
+  spread: 0.80, 
+  rim: 0.20
 },
 
 garlic: {
@@ -48,8 +50,9 @@ garlic: {
   pieceImgs: ["./assets/pieces/garlic_1.png"],
   pieceCount: 18,
   scaleMin: 0.015,
-  scaleMax: 0.02
-  spread: 0.65, rim: 0.30 // darf ruhig etwas clusterig
+  scaleMax: 0.02,
+  spread: 0.65, 
+  rim: 0.30 // darf ruhig etwas clusterig
 },
 
 salami: {
@@ -58,8 +61,9 @@ salami: {
   pieceImgs: ["./assets/pieces/salami_1.png"],
   pieceCount: 7,
   scaleMin: 0.07,
-  scaleMax: 0.07
-  spread: 0.90, rim: 0.35
+  scaleMax: 0.07,
+  spread: 0.90, 
+  rim: 0.35
 },
 
 corn: {
@@ -68,8 +72,9 @@ corn: {
   pieceImgs: ["./assets/pieces/corn_1.png"],
   pieceCount: 65,
   scaleMin: 0.065,
-  scaleMax: 0.075
-  spread: 0.70, rim: 0.10 // Mais klumpt oft leicht
+  scaleMax: 0.075,
+  spread: 0.70, 
+  rim: 0.10 // Mais klumpt oft leicht
 }
 };
 
@@ -728,6 +733,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
