@@ -442,8 +442,6 @@ if (conf.centered) {
 
 let targets;
 
-let targets;
-
 if (key === "salami") {
   // 7 außen + 1 mitte => targets.length = 8
   targets = generateSpacedRingPlusCenterTargets(
@@ -832,4 +830,5 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
