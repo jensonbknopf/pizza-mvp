@@ -35,7 +35,7 @@ mushrooms: {
   label: "Pilze",
   icon: "./assets/icons/mushrooms.png",
   pieceImgs: ["./assets/pieces/mushrooms_1.png"],
-  pieceCount: 10,
+  pieceCount: 15,
   scaleMin: 0.05,
   scaleMax: 0.05
 },
@@ -632,4 +632,5 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
