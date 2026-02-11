@@ -209,6 +209,7 @@ function removeTopping(key) {
   const nodes = toppingNodes.get(key) || [];
   nodes.forEach(n => n.destroy());
   toppingLayer.draw();
+  cheeseLayer.draw();
   toppingNodes.delete(key);
   activeToppings.delete(key);
   updateTrayUI();
@@ -615,6 +616,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
