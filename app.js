@@ -174,8 +174,8 @@ async function explodeScatterTopping(key, dropX, dropY) {
   const blastMax = 70;
 
   // Optik-Varianz
-  const scaleMin = 0.28;
-  const scaleMax = 0.52;
+  const scaleMin = 0.15;
+  const scaleMax = 0.35;
 
   // Wenn Drop-Punkt außerhalb Pizza liegt (kann bei schnellen Drags passieren),
   // setzen wir Explosion auf Pizza-Zentrum
@@ -523,6 +523,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
