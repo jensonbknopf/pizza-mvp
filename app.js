@@ -89,7 +89,7 @@ const resetBtn = document.getElementById("resetBtn");
 const hint = document.getElementById("hint");
 
 // ---------- Helpers ----------
-function generateSpacedOrganicTargets(cx, cy, radius, count, ring = 0.58, jitterAng = 0.28, jitterRad = 0.10, minDistPx = 85) {
+function generateSpacedOrganicTargets(cx, cy, radius, count, ring = 0.65, jitterAng = 0.28, jitterRad = 0.10, minDistPx = 90) {
   const pts = [];
   const start = Math.random() * Math.PI * 2;
 
@@ -940,6 +940,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
