@@ -26,9 +26,9 @@ pepper: {
   label: "Paprika",
   icon: "./assets/icons/pepper.png",
   pieceImgs: ["./assets/pieces/pepper_1.png"],
-  pieceCount: 5,
-  scaleMin: 0.05,
-  scaleMax: 0.05
+  pieceCount: 7,
+  scaleMin: 0.1,
+  scaleMax: 0.1
 },
 
 mushrooms: {
@@ -632,3 +632,4 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
