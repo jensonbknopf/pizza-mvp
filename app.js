@@ -311,6 +311,10 @@ async function explodeScatterTopping(key, dropX, dropY) {
     nodes.push(node);
     toppingLayer.add(node);
 
+// Layer-Mix: jedes Piece bekommt eine zufällige Position im Layer-Stack
+const n = toppingLayer.getChildren().length;
+node.zIndex(Math.floor(Math.random() * n));
+    
     node.to({
       duration: rand(0.10, 0.16),
       x: midX,
@@ -610,6 +614,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
