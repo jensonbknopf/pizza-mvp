@@ -204,52 +204,138 @@ function removeTopping(key) {
 
 // ---------- Explosion Scatter ----------
 async function explodeScatterTopping(key, dropX, dropY) {
-  // Wenn schon aktiv: für MVP ignorieren (keine doppelte Zutat)
-  if (activeToppings.has(key)) return;
-
-  activeToppings.add(key);
-  updateTrayUI();
-  updatePrice();
-
   const conf = TOPPINGS[key];
- // Sonderfall: zentriertes Topping (z.B. Käse)
-if (conf.centered) {
 
+  // schon aktiv? -> ignorieren
   if (activeToppings.has(key)) return;
 
+  // ----------------------------
+  // Sonderfall: zentriertes Topping (z.B. Käse)
+  // ----------------------------
+  if (conf.centered) {
+    activeToppings.add(key);
+    updateTrayUI();
+    updatePrice();
+
+    const img = await loadImage(conf.pieceImgs[0]);
+    const s = conf.scaleMin ?? 0.4;
+
+    const node = new Konva.Image({
+      image: img,
+      x: pizza.cx,
+      y: pizza.cy,
+      offsetX: img.width / 2,
+      offsetY: img.height / 2,
+      scaleX: s,
+      scaleY: s,
+      opacity: 0,
+      listening: false,
+    });
+
+    toppingLayer.add(node);
+    toppingNodes.set(key, [node]);
+
+    node.to({
+      duration: 0.25,
+      opacity: 1,
+      easing: Konva.Easings.EaseOut,
+    });
+
+    toppingLayer.draw();
+    hint.style.opacity = "0";
+    return;
+  }
+
+  // ----------------------------
+  // Normal: Scatter-Topping
+  // ----------------------------
   activeToppings.add(key);
   updateTrayUI();
   updatePrice();
 
-  const img = await loadImage(conf.pieceImgs[0]);
+  const nodes = [];
+  toppingNodes.set(key, nodes);
 
-  const s = conf.scaleMin ?? 0.8;
+  // Zielradius: innerhalb des Pizza-Rands
+  const targetRadius = pizza.radius * 0.90;
 
-  const node = new Konva.Image({
-    image: img,
-    x: pizza.cx,
-    y: pizza.cy,
-    offsetX: img.width / 2,
-    offsetY: img.height / 2,
-    scaleX: s,
-    scaleY: s,
-    opacity: 0,
-    listening: false,
-  });
+  // Safe-Radius damit Pieces nicht über den Rand ragen
+  const maxPiecePx = 28; // konservativ
+  const safeRadius = Math.max(10, targetRadius - maxPiecePx);
 
-  toppingLayer.add(node);
-  toppingNodes.set(key, [node]);
+  // Explosion feel
+  const blastMin = 22;
+  const blastMax = 70;
 
-  // kleines Einblend-Animation
-  node.to({
-    duration: 0.25,
-    opacity: 1,
-    easing: Konva.Easings.EaseOut
-  });
+  // Größen pro Topping
+  const scaleMin = conf.scaleMin ?? 0.08;
+  const scaleMax = conf.scaleMax ?? 0.12;
+
+  // Ursprung: Drop oder Center
+  const dropInside = isInsideCircle(dropX, dropY, pizza.cx, pizza.cy, pizza.radius);
+  const originX = dropInside ? dropX : pizza.cx;
+  const originY = dropInside ? dropY : pizza.cy;
+
+  hint.style.opacity = "0";
+
+  for (let i = 0; i < conf.pieceCount; i++) {
+    const imgSrc = conf.pieceImgs[Math.floor(Math.random() * conf.pieceImgs.length)];
+    const img = await loadImage(imgSrc);
+
+    const s = rand(scaleMin, scaleMax);
+    const rotation = rand(0, 360);
+
+    const target = randomPointInCircle(pizza.cx, pizza.cy, safeRadius);
+
+    const angle = Math.random() * Math.PI * 2;
+    const blastDist = rand(blastMin, blastMax);
+    const midX = originX + Math.cos(angle) * blastDist;
+    const midY = originY + Math.sin(angle) * blastDist;
+
+    const node = new Konva.Image({
+      image: img,
+      x: originX,
+      y: originY,
+      offsetX: img.width / 2,
+      offsetY: img.height / 2,
+      scaleX: s,
+      scaleY: s,
+      rotation,
+      opacity: 0.0,
+      listening: false,
+    });
+
+    nodes.push(node);
+    toppingLayer.add(node);
+
+    // Phase 1: blast
+    node.to({
+      duration: rand(0.10, 0.16),
+      x: midX,
+      y: midY,
+      opacity: rand(0.85, 1.0),
+      scaleX: s * 1.02,
+      scaleY: s * 1.02,
+      easing: Konva.Easings.EaseOut,
+    });
+
+    // Phase 2: settle
+    node.to({
+      duration: rand(0.22, 0.34),
+      delay: rand(0.08, 0.14),
+      x: target.x,
+      y: target.y,
+      scaleX: s,
+      scaleY: s,
+      rotation: rotation + rand(-20, 20),
+      easing: Konva.Easings.EaseInOut,
+    });
+  }
 
   toppingLayer.draw();
-  hint.style.opacity = "0";
-  return;
+  setTimeout(() => {
+    hint.style.opacity = activeToppings.size ? "0" : "1";
+  }, 250);
 }
 
 
@@ -615,6 +701,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
