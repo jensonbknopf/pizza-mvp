@@ -26,7 +26,7 @@ pepper: {
   label: "Paprika",
   icon: "./assets/icons/pepper.png",
   pieceImgs: ["./assets/pieces/pepper_1.png"],
-  pieceCount: 6,
+  pieceCount: 5,
   scaleMin: 0.07,
   scaleMax: 0.08,
   spread: 1.0, 
@@ -726,6 +726,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
