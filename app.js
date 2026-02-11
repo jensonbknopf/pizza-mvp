@@ -197,64 +197,6 @@ function generateSpacedRingPlusCenterTargets(cx, cy, radius, outerCount, ring = 
   return pts;
 }
 
-function generateRingPlusCenterTargets(cx, cy, radius, outerCount, ring = 0.62) {
-  const pts = [];
-  const start = Math.random() * Math.PI * 2;
-
-  for (let i = 0; i < outerCount; i++) {
-    // gleichmäßig, aber organisch verschoben
-    let a = start + (i * (Math.PI * 2 / outerCount));
-    a += (Math.random() * 2 - 1) * 0.22; // Winkel-Jitter
-
-    // Ring-Radius mit Variation
-    let r = radius * (ring + (Math.random() * 2 - 1) * 0.08);
-
-    pts.push({
-      x: cx + Math.cos(a) * r,
-      y: cy + Math.sin(a) * r
-    });
-  }
-
-  // Center-Salami: minimaler Jitter, damit sie nicht "zu perfekt" sitzt
-  pts.push({
-    x: cx + (Math.random() * 2 - 1) * (radius * 0.03),
-    y: cy + (Math.random() * 2 - 1) * (radius * 0.03)
-  });
-
-  return pts;
-}
-
-function generateOrganicRingTargets(cx, cy, radius, count) {
-  const pts = [];
-  const baseRing = 0.60; // Haupt-Ring
-  const start = Math.random() * Math.PI * 2;
-
-  for (let i = 0; i < count; i++) {
-
-    // Basiswinkel (gleichmäßig)
-    let a = start + (i * (Math.PI * 2 / count));
-
-    // Winkel leicht verschieben (chaos)
-    a += (Math.random() * 2 - 1) * 0.25;
-
-    // Radius leicht variieren (nicht perfekter Kreis)
-    let r = radius * (baseRing + (Math.random() * 2 - 1) * 0.12);
-
-    // 1–2 Stück dürfen leicht weiter innen liegen
-    if (Math.random() < 0.25) {
-      r = radius * (0.35 + Math.random() * 0.15);
-    }
-
-    pts.push({
-      x: cx + Math.cos(a) * r,
-      y: cy + Math.sin(a) * r
-    });
-  }
-
-  return pts;
-}
-
-
 function formatEUR(value) {
   // de-DE: 7,50 €
   return value.toLocaleString("de-DE", { style: "currency", currency: "EUR" });
@@ -335,31 +277,6 @@ function generateTargetsTuned(cx, cy, radius, count, spread = 0.8, rim = 0.2) {
 
   return pts;
 }
-
-function generateEvenPointsInCircle(cx, cy, radius, count) {
-  // Mindestabstand grob aus Fläche/Anzahl abgeleitet (tweakbar)
-  const area = Math.PI * radius * radius;
-  const minDist = Math.max(6, Math.sqrt(area / count) * 0.35);
-
-  const pts = [];
-  const maxAttempts = count * 40;
-
-  let attempts = 0;
-  while (pts.length < count && attempts < maxAttempts) {
-    attempts++;
-    const p = randomPointInCircle(cx, cy, radius);
-
-    let ok = true;
-    for (let i = 0; i < pts.length; i++) {
-      const dx = p.x - pts[i].x;
-      const dy = p.y - pts[i].y;
-      if (dx*dx + dy*dy < minDist*minDist) {
-        ok = false;
-        break;
-      }
-    }
-    if (ok) pts.push(p);
-  }
 
   // Falls wir nicht genug Punkte schaffen, füllen wir den Rest normal auf
   while (pts.length < count) {
@@ -940,6 +857,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
