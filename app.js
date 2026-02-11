@@ -332,96 +332,6 @@ async function explodeScatterTopping(key, dropX, dropY) {
   toppingLayer.draw();
 }
 
-
-
-  // Zielradius: etwas innerhalb des Pizza-Rands
- const targetRadius = pizza.radius * 0.9;
-
-// Safe-Radius: damit das ganze Piece im Kreis bleibt
-const maxPiecePx = 28; // grobe Obergrenze in Pixeln (passen wir gleich an)
-const safeRadius = Math.max(10, targetRadius - maxPiecePx);
-
-  // Explosionsparameter (feel-good Werte)
-  const blastMin = 22;
-  const blastMax = 70;
-
-  // Optik-Varianz
-  const scaleMin = conf.scaleMin ?? 0.3;
-const scaleMax = conf.scaleMax ?? 0.6;
-
-
-  // Wenn Drop-Punkt außerhalb Pizza liegt (kann bei schnellen Drags passieren),
-  // setzen wir Explosion auf Pizza-Zentrum
-  const dropInside = isInsideCircle(dropX, dropY, pizza.cx, pizza.cy, pizza.radius);
-  const originX = dropInside ? dropX : pizza.cx;
-  const originY = dropInside ? dropY : pizza.cy;
-
-  hint.style.opacity = "0";
-
-  for (let i = 0; i < conf.pieceCount; i++) {
-    const imgSrc = conf.pieceImgs[Math.floor(Math.random() * conf.pieceImgs.length)];
-    const img = await loadImage(imgSrc);
-
-    const target = randomPointInCircle(pizza.cx, pizza.cy, safeRadius);
-
-    // Start: am Ursprung (Drop)
-    const startX = originX;
-    const startY = originY;
-
-    // Zwischenpunkt: radial “weg” vom Ursprung
-    const angle = Math.random() * Math.PI * 2;
-    const blastDist = rand(blastMin, blastMax);
-    const midX = originX + Math.cos(angle) * blastDist;
-    const midY = originY + Math.sin(angle) * blastDist;
-
-    const s = rand(scaleMin, scaleMax);
-    const rotation = rand(0, 360);
-
-    const node = new Konva.Image({
-      image: img,
-      x: startX,
-      y: startY,
-      offsetX: img.width / 2,
-      offsetY: img.height / 2,
-      scaleX: s * 0.65,
-      scaleY: s * 0.65,
-      rotation,
-      opacity: 0.0,
-      listening: false,
-    });
-
-    nodes.push(node);
-    toppingLayer.add(node);
-
-    // Animation Phase 1: “Pop + Blast”
-    node.to({
-      duration: rand(0.10, 0.16),
-      x: midX,
-      y: midY,
-      opacity: rand(0.85, 1.0),
-      scaleX: s * 0.95,
-      scaleY: s * 0.95,
-      easing: Konva.Easings.EaseOut,
-    });
-
-    // Animation Phase 2: “Settle” auf Ziel
-    // Kleiner Delay, damit es sich wie Explosion anfühlt
-    node.to({
-      duration: rand(0.22, 0.34),
-      delay: rand(0.08, 0.14),
-      x: target.x,
-      y: target.y,
-      scaleX: s,
-      scaleY: s,
-      rotation: rotation + rand(-20, 20),
-      easing: Konva.Easings.EaseInOut,
-    });
-  }
-
-  toppingLayer.draw();
-  setTimeout(() => { hint.style.opacity = activeToppings.size ? "0" : "1"; }, 250);
-}
-
 // ---------- Dragging (Finger-friendly) ----------
 let dragGhost = null;
 let draggingKey = null;
@@ -696,6 +606,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
