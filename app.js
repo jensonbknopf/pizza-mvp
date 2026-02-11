@@ -245,9 +245,17 @@ if (conf.centered) {
   cheeseLayer.add(node);
   toppingNodes.set(key, [node]);
 
+  // weich + milchig
+  node.cache();
+  node.filters([Konva.Filters.Blur]);
+  node.blurRadius(2.5);
+
+  // optional: macht den Käse "milchiger"
+  node.globalCompositeOperation("screen");
+  
   node.to({
     duration: 0.25,
-    opacity: 1,
+    opacity: 0.9,
     easing: Konva.Easings.EaseOut,
   });
 
@@ -632,6 +640,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
