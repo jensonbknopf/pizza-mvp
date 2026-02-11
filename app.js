@@ -93,6 +93,42 @@ const resetBtn = document.getElementById("resetBtn");
 const hint = document.getElementById("hint");
 
 // ---------- Helpers ----------
+function generateSpacedOrganicTargets(cx, cy, radius, count, ring = 0.58, jitterAng = 0.28, jitterRad = 0.10, minDistPx = 55) {
+  const pts = [];
+  const start = Math.random() * Math.PI * 2;
+
+  const maxAttempts = 400; // reicht locker für count=5
+  let attempts = 0;
+
+  while (pts.length < count && attempts < maxAttempts) {
+    attempts++;
+
+    // "organischer Ring": Winkel + Radius jitter
+    const i = pts.length; // wir füllen nacheinander
+    let a = start + (i * (Math.PI * 2 / count));
+    a += (Math.random() * 2 - 1) * jitterAng;
+
+    let r = radius * (ring + (Math.random() * 2 - 1) * jitterRad);
+
+    const p = { x: cx + Math.cos(a) * r, y: cy + Math.sin(a) * r };
+
+    // Mindestabstand check
+    let ok = true;
+    for (let k = 0; k < pts.length; k++) {
+      const dx = p.x - pts[k].x;
+      const dy = p.y - pts[k].y;
+      if (dx * dx + dy * dy < minDistPx * minDistPx) { ok = false; break; }
+    }
+
+    if (ok) pts.push(p);
+  }
+
+  // Fallback: falls es knapp wird, fülle auf (sollte bei 5 nie passieren)
+  while (pts.length < count) pts.push(randomPointInCircle(cx, cy, radius * ring));
+
+  return pts;
+}
+
 function generateRingPlusCenterTargets(cx, cy, radius, outerCount, ring = 0.62) {
   const pts = [];
   const start = Math.random() * Math.PI * 2;
@@ -426,11 +462,15 @@ if (conf.centered) {
 let targets;
 
 if (key === "pepper") {
-  targets = generateOrganicRingTargets(
+  targets = generateSpacedOrganicTargets(
     pizza.cx,
     pizza.cy,
     safeRadius,
-    conf.pieceCount
+    conf.pieceCount,
+    0.58,  // ring
+    0.28,  // jitter angle
+    0.10,  // jitter radius
+    60     // minDist in Pixel (tune!)
   );
 }
   
@@ -815,6 +855,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
