@@ -184,12 +184,14 @@ async function drawPizzaBase() {
   baseLayer.add(baseNode);
   baseLayer.draw();
 
-  pizza = {
-    cx: x + drawW / 2,
-    cy: y + drawH / 2,
-    radius: r,
-    baseNode,
-  };
+ pizza = {
+  cx: x + drawW / 2,
+  cy: y + drawH / 2,
+  radius: r,
+  baseNode,
+  baseBox: { x, y, w: drawW, h: drawH }   // <- neu
+};
+
 }
 
 function clearAllToppings() {
@@ -228,17 +230,18 @@ async function explodeScatterTopping(key, dropX, dropY) {
 
     const img = await loadImage(conf.pieceImgs[0]);
     const s = conf.scaleMin ?? 0.4;
+    const { x, y, w, h } = pizza.baseBox;
 
     const node = new Konva.Image({
       image: img,
-      x: pizza.cx,
-      y: pizza.cy,
-      offsetX: img.width / 2,
-      offsetY: img.height / 2,
-      scaleX: s,
-      scaleY: s,
+      x,
+      y,
+      width: w,
+      height: h,
       opacity: 0,
       listening: false,
+    });
+
     });
 
     cheeseLayer.add(node);
@@ -614,6 +617,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
