@@ -5,7 +5,7 @@
   --accent: #2dd4bf;
 
   /* feste, planbare Höhe der Zutatenleiste */
-  --trayH: 160px;
+  --trayH: 60px;
   /* Header-Höhe (bei dir ungefähr) */
   --headerH: 74px;
 }
@@ -184,3 +184,4 @@ body{
 }
 
 .toppingCard.active .trashBtn{ display:flex; }
+
