@@ -174,8 +174,8 @@ async function explodeScatterTopping(key, dropX, dropY) {
   const blastMax = 70;
 
   // Optik-Varianz
-  const scaleMin = 0.55;
-  const scaleMax = 0.95;
+  const scaleMin = 0.28;
+  const scaleMax = 0.52;
 
   // Wenn Drop-Punkt außerhalb Pizza liegt (kann bei schnellen Drags passieren),
   // setzen wir Explosion auf Pizza-Zentrum
@@ -226,8 +226,8 @@ async function explodeScatterTopping(key, dropX, dropY) {
       x: midX,
       y: midY,
       opacity: rand(0.85, 1.0),
-      scaleX: s * 1.05,
-      scaleY: s * 1.05,
+      scaleX: s * 1.02,
+      scaleY: s * 1.02,
       easing: Konva.Easings.EaseOut,
     });
 
@@ -523,6 +523,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
