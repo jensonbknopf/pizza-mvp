@@ -27,8 +27,8 @@ pepper: {
   icon: "./assets/icons/pepper.png",
   pieceImgs: ["./assets/pieces/pepper_1.png"],
   pieceCount: 6,
-  scaleMin: 0.7,
-  scaleMax: 0.8
+  scaleMin: 0.07,
+  scaleMax: 0.08
   spread: 0.85, rim: 0.25
 },
 
@@ -728,6 +728,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
