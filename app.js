@@ -17,8 +17,8 @@ cheese: {
   icon: "./assets/icons/cheese.png",
   pieceImgs: ["./assets/pieces/cheese_1.png"],
   pieceCount: 1,
-  scaleMin: 0.8,
-  scaleMax: 0.8,
+  scaleMin: 0.4,
+  scaleMax: 0.4,
   centered: true
 },
 
@@ -36,9 +36,9 @@ cheese: {
     label: "Pilze",
     icon: "./assets/icons/mushrooms.png",
     pieceImgs: ["./assets/pieces/mushrooms_1.png"],
-    pieceCount: 22,
-    scaleMin: 0.45,
-    scaleMax: 0.65
+    pieceCount: 10,
+    scaleMin: 0.05,
+    scaleMax: 0.05
   },
 
   garlic: {
@@ -615,6 +615,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
