@@ -16,7 +16,7 @@ const TOPPINGS = {
     label: "Käse",
     icon: "./assets/icons/cheese.png",
     pieceImgs: ["./assets/pieces/cheese_1.png"],
-    pieceCount: 70,
+    pieceCount: 1,
     scaleMin: 0.22,
     scaleMax: 0.40
   },
@@ -575,6 +575,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
