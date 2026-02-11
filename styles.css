@@ -74,8 +74,9 @@ body{
 
 /* ---------------- MAIN ---------------- */
 /* Header ist außerhalb von .main -> .main bekommt volle Viewport-Höhe */
+
 .main{
-  height: 100dvh;
+  height: calc(100dvh - var(--headerH));
   display:flex;
   flex-direction:column;
   overflow:hidden;
@@ -126,7 +127,7 @@ body{
 .tray{
   flex: 0 0 auto;
   height: var(--trayH);
-  padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+  padding: 10px 12px calc(22px + env(safe-area-inset-bottom)); /* <- Puffer */
   background: linear-gradient(
     180deg,
     rgba(22,26,34,0),
@@ -211,3 +212,4 @@ body{
 .toppingCard.active .trashBtn{
   display:flex;
 }
+
