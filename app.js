@@ -51,7 +51,7 @@ garlic: {
   pieceCount: 18,
   scaleMin: 0.015,
   scaleMax: 0.02,
-  spread: 0.65, 
+  spread: 0.9, 
   rim: 0.30 // darf ruhig etwas clusterig
 },
 
@@ -726,6 +726,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
