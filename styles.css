@@ -84,7 +84,7 @@ body{
   position: relative;
   flex: 1 1 auto;
   min-height: 0; /* wichtig für Flex */
-  padding: 8px 12px 0;
+  padding: 8px 12px 12px;
 }
 
 .stageContainer{
@@ -114,7 +114,7 @@ body{
 
 .tray{
   flex: 0 0 auto;
-  padding: 10px 12px calc(14px + env(safe-area-inset-bottom));
+  padding: 10px 12px calc(28px + env(safe-area-inset-bottom));
   background: linear-gradient(
     180deg,
     rgba(22,26,34,0),
@@ -202,3 +202,4 @@ body{
 .toppingCard.active .trashBtn{
   display:flex;
 }
+
