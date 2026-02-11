@@ -446,7 +446,20 @@ if (conf.centered) {
 
 let targets;
 
-if (key === "pepper") {
+let targets;
+
+if (key === "salami") {
+  // 7 außen + 1 mitte => targets.length = 8
+  targets = generateSpacedRingPlusCenterTargets(
+    pizza.cx,
+    pizza.cy,
+    safeRadius,
+    7,     // außen
+    0.70,  // ring
+    80     // minDist
+  );
+
+} else if (key === "pepper") {
   targets = generateSpacedOrganicTargets(
     pizza.cx,
     pizza.cy,
@@ -455,11 +468,10 @@ if (key === "pepper") {
     0.58,  // ring
     0.28,  // jitter angle
     0.10,  // jitter radius
-    60     // minDist in Pixel (tune!)
+    60     // minDist
   );
-}
-  
-else {
+
+} else {
   const spread = conf.spread ?? 0.8;
   const rim = conf.rim ?? 0.2;
 
@@ -473,39 +485,6 @@ else {
   );
 }
 
-if (key === "salami") {
-  targets = generateSpacedRingPlusCenterTargets(
-    pizza.cx,
-    pizza.cy,
-    safeRadius,
-    7,     // außen
-    0.70,  // ring (0.66–0.75 gut)
-    80     // minDistPx (tune!)
-  );
-} else if (key === "pepper") {
-  targets = generateSpacedOrganicTargets(pizza.cx, pizza.cy, safeRadius, conf.pieceCount, 0.58, 0.28, 0.10, 60);
-} else {
-  const spread = conf.spread ?? 0.8;
-  const rim = conf.rim ?? 0.2;
-  targets = generateTargetsTuned(pizza.cx, pizza.cy, safeRadius, conf.pieceCount, spread, rim);
-}
-  
-if (key === "salami") {
-  // 7 außen + 1 Mitte
-  targets = generateRingPlusCenterTargets(
-    pizza.cx,
-    pizza.cy,
-    safeRadius,
-    7,    // outerCount
-    0.68  // Ring (0.62–0.75 gut)
-  );
-} else if (key === "pepper") {
-  targets = generateOrganicRingTargets(pizza.cx, pizza.cy, safeRadius, conf.pieceCount);
-} else {
-  const spread = conf.spread ?? 0.8;
-  const rim = conf.rim ?? 0.2;
-  targets = generateTargetsTuned(pizza.cx, pizza.cy, safeRadius, conf.pieceCount, spread, rim);
-}
 
   
   for (let i = 0; i < conf.pieceCount; i++) {
@@ -857,6 +836,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
