@@ -1,23 +1,28 @@
 :root{
   --bg: #0f1115;
-  --panel: #161a22;
   --text: #eef1f6;
   --muted: #a9b1c3;
   --accent: #2dd4bf;
+
+  /* feste, planbare Höhe der Zutatenleiste */
+  --trayH: 160px;
+  /* Header-Höhe (bei dir ungefähr) */
+  --headerH: 74px;
 }
 
-*{
-  box-sizing: border-box;
-}
+*{ box-sizing: border-box; }
 
 html, body{
   margin: 0;
   padding: 0;
   height: 100%;
-  overflow: hidden; /* App-Feeling, kein Scroll */
+  overflow-x: hidden;
 }
 
+/* WICHTIG: Scroll wieder erlauben, damit nix “geclippt” wird */
 body{
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
   background: radial-gradient(1200px 600px at 50% -10%, #222a3a, var(--bg));
   color: var(--text);
@@ -33,16 +38,8 @@ body{
   padding: 14px 14px 10px;
 }
 
-.title .h1{
-  font-size: 16px;
-  font-weight: 700;
-}
-
-.title .sub{
-  margin-top: 2px;
-  font-size: 12px;
-  color: var(--muted);
-}
+.title .h1{ font-size: 16px; font-weight: 700; }
+.title .sub{ margin-top: 2px; font-size: 12px; color: var(--muted); }
 
 .priceWrap{
   display:flex;
@@ -69,22 +66,22 @@ body{
   font-weight: 650;
 }
 
-/* ---------------- MAIN APP LAYOUT ---------------- */
-
+/* ---------------- MAIN ---------------- */
+/* 100svh ist auf Mobile stabiler als 100vh/100dvh in vielen Fällen */
 .main{
-  height: 100dvh; /* Dynamische Viewport-Höhe */
+  min-height: calc(100svh - var(--headerH));
   display:flex;
   flex-direction:column;
-  overflow:hidden;
+  padding-bottom: calc(env(safe-area-inset-bottom) + 8px);
 }
 
 /* ---------------- STAGE ---------------- */
-
+/* Bühne bekommt fix den Platz, der übrig bleibt – damit die Tray nie abgeschnitten wird */
 .stageWrap{
   position: relative;
-  flex: 1 1 auto;
-  min-height: 0; /* wichtig für Flex */
-  padding: 8px 12px 12px;
+  padding: 8px 12px 10px;
+  height: calc(100svh - var(--headerH) - var(--trayH) - 10px);
+  min-height: 320px; /* falls sehr kleines Display */
 }
 
 .stageContainer{
@@ -110,11 +107,13 @@ body{
   pointer-events:none;
 }
 
-/* ---------------- TRAY (ZUTATEN) ---------------- */
-
+/* ---------------- TRAY ---------------- */
+/* Sticky: bleibt unten sichtbar, aber ohne das “clippen” von overflow hidden */
 .tray{
-  flex: 0 0 auto;
-  padding: 10px 12px calc(28px + env(safe-area-inset-bottom));
+  position: sticky;
+  bottom: 0;
+  height: var(--trayH);
+  padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
   background: linear-gradient(
     180deg,
     rgba(22,26,34,0),
@@ -150,8 +149,7 @@ body{
 }
 
 .toppingIcon{
-  width: 46px;
-  height: 46px;
+  width: 46px; height: 46px;
   border-radius: 12px;
   background: rgba(0,0,0,.22);
   display:flex;
@@ -162,33 +160,19 @@ body{
 }
 
 .toppingIcon img{
-  width: 40px;
-  height: 40px;
+  width: 40px; height: 40px;
   object-fit: contain;
   user-select:none;
   -webkit-user-drag:none;
 }
 
-.toppingName{
-  margin-top: 8px;
-  font-size: 13px;
-  font-weight: 750;
-}
-
-.toppingPrice{
-  margin-top: 2px;
-  font-size: 12px;
-  color: var(--muted);
-}
-
-/* ---------------- TRASH BUTTON ---------------- */
+.toppingName{ margin-top: 8px; font-size: 13px; font-weight: 750; }
+.toppingPrice{ margin-top: 2px; font-size: 12px; color: var(--muted); }
 
 .trashBtn{
   position:absolute;
-  top: 8px;
-  right: 8px;
-  width: 28px;
-  height: 28px;
+  top: 8px; right: 8px;
+  width: 28px; height: 28px;
   border-radius: 10px;
   border: 1px solid rgba(255,255,255,.14);
   background: rgba(0,0,0,.18);
@@ -199,7 +183,4 @@ body{
   font-size: 14px;
 }
 
-.toppingCard.active .trashBtn{
-  display:flex;
-}
-
+.toppingCard.active .trashBtn{ display:flex; }
