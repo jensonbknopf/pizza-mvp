@@ -45,8 +45,8 @@ garlic: {
   icon: "./assets/icons/garlic.png",
   pieceImgs: ["./assets/pieces/garlic_1.png"],
   pieceCount: 18,
-  scaleMin: 0.03,
-  scaleMax: 0.03
+  scaleMin: 0.02,
+  scaleMax: 0.02
 },
 
 salami: {
@@ -632,6 +632,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
