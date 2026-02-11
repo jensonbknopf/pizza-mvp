@@ -242,7 +242,7 @@ async function explodeScatterTopping(key, dropX, dropY) {
       listening: false,
     });
 
-    });
+    };
 
     cheeseLayer.add(node);
     toppingNodes.set(key, [node]);
@@ -617,6 +617,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
