@@ -126,6 +126,40 @@ function isInsideCircle(x, y, cx, cy, r) {
   return (dx*dx + dy*dy) <= (r*r);
 }
 
+function generateEvenPointsInCircle(cx, cy, radius, count) {
+  // Mindestabstand grob aus Fläche/Anzahl abgeleitet (tweakbar)
+  const area = Math.PI * radius * radius;
+  const minDist = Math.max(6, Math.sqrt(area / count) * 0.35);
+
+  const pts = [];
+  const maxAttempts = count * 40;
+
+  let attempts = 0;
+  while (pts.length < count && attempts < maxAttempts) {
+    attempts++;
+    const p = randomPointInCircle(cx, cy, radius);
+
+    let ok = true;
+    for (let i = 0; i < pts.length; i++) {
+      const dx = p.x - pts[i].x;
+      const dy = p.y - pts[i].y;
+      if (dx*dx + dy*dy < minDist*minDist) {
+        ok = false;
+        break;
+      }
+    }
+    if (ok) pts.push(p);
+  }
+
+  // Falls wir nicht genug Punkte schaffen, füllen wir den Rest normal auf
+  while (pts.length < count) {
+    pts.push(randomPointInCircle(cx, cy, radius));
+  }
+
+  return pts;
+}
+
+
 // ---------- Konva setup ----------
 let stage, baseLayer, cheeseLayer, toppingLayer, uiLayer;
 let pizza = { cx: 0, cy: 0, radius: 0, baseNode: null };
@@ -283,6 +317,8 @@ if (conf.centered) {
 
   hint.style.opacity = "0";
 
+  const targets = generateEvenPointsInCircle(pizza.cx, pizza.cy, safeRadius, conf.pieceCount);
+
   for (let i = 0; i < conf.pieceCount; i++) {
     const imgSrc = conf.pieceImgs[Math.floor(Math.random() * conf.pieceImgs.length)];
     const img = await loadImage(imgSrc);
@@ -290,7 +326,7 @@ if (conf.centered) {
     const s = rand(scaleMin, scaleMax);
     const rotation = rand(0, 360);
 
-    const target = randomPointInCircle(pizza.cx, pizza.cy, safeRadius);
+    const target = targets[i];
 
     const angle = Math.random() * Math.PI * 2;
     const blastDist = rand(blastMin, blastMax);
@@ -632,6 +668,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
