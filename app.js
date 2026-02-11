@@ -1,5 +1,5 @@
 // Long-press / Drag Steuerung
-const LONG_PRESS_MS = 180;      // fühlt sich “lockig” an (250–350 gut)
+const LONG_PRESS_MS = 80;      // fühlt sich “lockig” an (250–350 gut)
 const MOVE_CANCEL_PX = 10;      // wenn man vorher wischt -> kein Drag
 let pressTimer = null;
 let pressStart = null;          // {x,y}
@@ -614,6 +614,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
