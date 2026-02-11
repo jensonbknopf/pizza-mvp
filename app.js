@@ -22,51 +22,50 @@ cheese: {
   centered: true
 },
 
+pepper: {
+  label: "Paprika",
+  icon: "./assets/icons/pepper.png",
+  pieceImgs: ["./assets/pieces/pepper_1.png"],
+  pieceCount: 5,
+  scaleMin: 0.05,
+  scaleMax: 0.05
+},
 
-  pepper: {
-    label: "Paprika",
-    icon: "./assets/icons/pepper.png",
-    pieceImgs: ["./assets/pieces/pepper_1.png"],
-    pieceCount: 5,
-    scaleMin: 0.05,
-    scaleMax: 0.05
-  },
+mushrooms: {
+  label: "Pilze",
+  icon: "./assets/icons/mushrooms.png",
+  pieceImgs: ["./assets/pieces/mushrooms_1.png"],
+  pieceCount: 10,
+  scaleMin: 0.05,
+  scaleMax: 0.05
+},
 
-  mushrooms: {
-    label: "Pilze",
-    icon: "./assets/icons/mushrooms.png",
-    pieceImgs: ["./assets/pieces/mushrooms_1.png"],
-    pieceCount: 10,
-    scaleMin: 0.05,
-    scaleMax: 0.05
-  },
+garlic: {
+  label: "Knoblauch",
+  icon: "./assets/icons/garlic.png",
+  pieceImgs: ["./assets/pieces/garlic_1.png"],
+  pieceCount: 18,
+  scaleMin: 0.03,
+  scaleMax: 0.03
+},
 
-  garlic: {
-    label: "Knoblauch",
-    icon: "./assets/icons/garlic.png",
-    pieceImgs: ["./assets/pieces/garlic_1.png"],
-    pieceCount: 18,
-    scaleMin: 0.03,
-    scaleMax: 0.03
-  },
+salami: {
+  label: "Salami",
+  icon: "./assets/icons/salami.png",
+  pieceImgs: ["./assets/pieces/salami_1.png"],
+  pieceCount: 6,
+  scaleMin: 0.1,
+  scaleMax: 0.1
+},
 
-  salami: {
-    label: "Salami",
-    icon: "./assets/icons/salami.png",
-    pieceImgs: ["./assets/pieces/salami_1.png"],
-    pieceCount: 6,
-    scaleMin: 0.1,
-    scaleMax: 0.1
-  },
-
-  corn: {
-    label: "Mais",
-    icon: "./assets/icons/corn.png",
-    pieceImgs: ["./assets/pieces/corn_1.png"],
-    pieceCount: 65,
-    scaleMin: 0.06,
-    scaleMax: 0.06
-  }
+corn: {
+  label: "Mais",
+  icon: "./assets/icons/corn.png",
+  pieceImgs: ["./assets/pieces/corn_1.png"],
+  pieceCount: 65,
+  scaleMin: 0.06,
+  scaleMax: 0.06
+}
 };
 
 const BASE_IMG = "./assets/base/pizza_base_sauce.png";
@@ -697,6 +696,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
