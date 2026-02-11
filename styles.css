@@ -81,9 +81,17 @@ body{
   background: var(--green);
   border: none;
   color: #ffffff;
-  padding: 8px 12px;
-  border-radius: 10px;
+  padding: 10px 14px;
+  border-radius: 12px;
   font-weight: 600;
+  cursor: pointer;
+}
+
+.resetBtn.floating{
+  position: absolute;
+  bottom: 18px;
+  right: 18px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.15);
 }
 
 .resetBtn:active{
@@ -226,3 +234,4 @@ body{
 .toppingCard.active .trashBtn{
   display:flex;
 }
+
