@@ -283,7 +283,6 @@ function generateTargetsTuned(cx, cy, radius, count, spread = 0.8, rim = 0.2) {
     pts.push(randomPointInCircle(cx, cy, radius));
   }
 
-  return pts;
 }
 
 
@@ -836,6 +835,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
