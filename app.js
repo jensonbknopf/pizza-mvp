@@ -127,7 +127,7 @@ function isInsideCircle(x, y, cx, cy, r) {
 }
 
 // ---------- Konva setup ----------
-let stage, baseLayer, toppingLayer, uiLayer;
+let stage, baseLayer, cheeseLayer, toppingLayer, uiLayer;
 let pizza = { cx: 0, cy: 0, radius: 0, baseNode: null };
 
 function getStageSize() {
@@ -144,13 +144,15 @@ function createStage() {
     height: h,
   });
 
-  baseLayer = new Konva.Layer();
-  toppingLayer = new Konva.Layer();
-  uiLayer = new Konva.Layer();
+baseLayer = new Konva.Layer();
+cheeseLayer = new Konva.Layer();
+toppingLayer = new Konva.Layer();
+uiLayer = new Konva.Layer();
 
-  stage.add(baseLayer);
-  stage.add(toppingLayer);
-  stage.add(uiLayer);
+stage.add(baseLayer);
+stage.add(cheeseLayer);   // <- zwischen Base und Toppings
+stage.add(toppingLayer);
+stage.add(uiLayer);
 }
 
 async function drawPizzaBase() {
@@ -192,7 +194,9 @@ async function drawPizzaBase() {
 
 function clearAllToppings() {
   toppingLayer.destroyChildren();
+  cheeseLayer.destroyChildren();
   toppingLayer.draw();
+  cheeseLayer.draw();
   activeToppings.clear();
   toppingNodes.clear();
   updateTrayUI();
@@ -237,7 +241,7 @@ async function explodeScatterTopping(key, dropX, dropY) {
       listening: false,
     });
 
-    toppingLayer.add(node);
+    cheeseLayer.add(node);
     toppingNodes.set(key, [node]);
 
     node.to({
@@ -246,7 +250,7 @@ async function explodeScatterTopping(key, dropX, dropY) {
       easing: Konva.Easings.EaseOut,
     });
 
-    toppingLayer.draw();
+    cheeseLayer.draw();
     hint.style.opacity = "0";
     return;
   }
@@ -606,6 +610,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
