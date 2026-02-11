@@ -283,9 +283,6 @@ function generateTargetsTuned(cx, cy, radius, count, spread = 0.8, rim = 0.2) {
     pts.push(randomPointInCircle(cx, cy, radius));
   }
 
-}
-
-
 // ---------- Konva setup ----------
 let stage, baseLayer, cheeseLayer, toppingLayer, uiLayer;
 let pizza = { cx: 0, cy: 0, radius: 0, baseNode: null };
@@ -835,3 +832,4 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
