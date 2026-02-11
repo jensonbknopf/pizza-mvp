@@ -17,8 +17,8 @@ cheese: {
   icon: "./assets/icons/cheese.png",
   pieceImgs: ["./assets/pieces/cheese_1.png"],
   pieceCount: 1,
-  scaleMin: 0.3,
-  scaleMax: 0.3,
+  scaleMin: 0.35,
+  scaleMax: 0.35,
   centered: true
 },
 
@@ -606,6 +606,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
