@@ -28,7 +28,9 @@ pepper: {
   pieceImgs: ["./assets/pieces/pepper_1.png"],
   pieceCount: 8,
   scaleMin: 0.05,
-  scaleMax: 0.07
+  scaleMax: 0.07,
+  spread: 0.95, 
+  rim: 0.5
 },
 
 mushrooms: {
@@ -813,6 +815,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
