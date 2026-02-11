@@ -30,7 +30,7 @@ pepper: {
   scaleMin: 0.07,
   scaleMax: 0.08,
   spread: 1.0, 
-  rim: 0.4
+  rim: 0.5
 },
 
 mushrooms: {
@@ -726,6 +726,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
