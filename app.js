@@ -67,7 +67,7 @@ corn: {
   icon: "./assets/icons/corn.png",
   pieceImgs: ["./assets/pieces/corn_1.png"],
   pieceCount: 65,
-  scaleMin: 0.07,
+  scaleMin: 0.007,
   scaleMax: 0.01,
   spread: 0.5, 
   rim: 0.15 // Mais klumpt oft leicht
@@ -940,6 +940,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
