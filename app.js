@@ -27,9 +27,9 @@ cheese: {
     label: "Paprika",
     icon: "./assets/icons/pepper.png",
     pieceImgs: ["./assets/pieces/pepper_1.png"],
-    pieceCount: 45,
-    scaleMin: 0.30,
-    scaleMax: 0.50
+    pieceCount: 5,
+    scaleMin: 0.05,
+    scaleMax: 0.05
   },
 
   mushrooms: {
@@ -45,18 +45,18 @@ cheese: {
     label: "Knoblauch",
     icon: "./assets/icons/garlic.png",
     pieceImgs: ["./assets/pieces/garlic_1.png"],
-    pieceCount: 28,
-    scaleMin: 0.18,
-    scaleMax: 0.30
+    pieceCount: 18,
+    scaleMin: 0.03,
+    scaleMax: 0.03
   },
 
   salami: {
     label: "Salami",
     icon: "./assets/icons/salami.png",
     pieceImgs: ["./assets/pieces/salami_1.png"],
-    pieceCount: 14,
-    scaleMin: 0.55,
-    scaleMax: 0.75
+    pieceCount: 6,
+    scaleMin: 0.1,
+    scaleMax: 0.1
   },
 
   corn: {
@@ -64,8 +64,8 @@ cheese: {
     icon: "./assets/icons/corn.png",
     pieceImgs: ["./assets/pieces/corn_1.png"],
     pieceCount: 65,
-    scaleMin: 0.16,
-    scaleMax: 0.28
+    scaleMin: 0.06,
+    scaleMax: 0.06
   }
 };
 
@@ -615,6 +615,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
