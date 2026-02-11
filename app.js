@@ -167,7 +167,7 @@ async function explodeScatterTopping(key, dropX, dropY) {
   toppingNodes.set(key, nodes);
 
   // Zielradius: etwas innerhalb des Pizza-Rands
- const targetRadius = pizza.radius * 0.86;
+ const targetRadius = pizza.radius * 0.9;
 
 // Safe-Radius: damit das ganze Piece im Kreis bleibt
 const maxPiecePx = 28; // grobe Obergrenze in Pixeln (passen wir gleich an)
@@ -527,6 +527,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
