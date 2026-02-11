@@ -5,7 +5,7 @@
   --accent: #2dd4bf;
 
   --headerH: 74px;
-  --trayH: 150px;
+  --trayH: 160px;
 }
 
 *{
@@ -200,3 +200,4 @@ body{
 .toppingCard.active .trashBtn{
   display:flex;
 }
+
