@@ -91,6 +91,33 @@ const resetBtn = document.getElementById("resetBtn");
 const hint = document.getElementById("hint");
 
 // ---------- Helpers ----------
+function generateRingPlusCenterTargets(cx, cy, radius, outerCount, ring = 0.62) {
+  const pts = [];
+  const start = Math.random() * Math.PI * 2;
+
+  for (let i = 0; i < outerCount; i++) {
+    // gleichmäßig, aber organisch verschoben
+    let a = start + (i * (Math.PI * 2 / outerCount));
+    a += (Math.random() * 2 - 1) * 0.22; // Winkel-Jitter
+
+    // Ring-Radius mit Variation
+    let r = radius * (ring + (Math.random() * 2 - 1) * 0.08);
+
+    pts.push({
+      x: cx + Math.cos(a) * r,
+      y: cy + Math.sin(a) * r
+    });
+  }
+
+  // Center-Salami: minimaler Jitter, damit sie nicht "zu perfekt" sitzt
+  pts.push({
+    x: cx + (Math.random() * 2 - 1) * (radius * 0.03),
+    y: cy + (Math.random() * 2 - 1) * (radius * 0.03)
+  });
+
+  return pts;
+}
+
 function generateOrganicRingTargets(cx, cy, radius, count) {
   const pts = [];
   const baseRing = 0.60; // Haupt-Ring
@@ -404,7 +431,7 @@ if (key === "pepper") {
     conf.pieceCount
   );
 }
-
+  
 else {
   const spread = conf.spread ?? 0.8;
   const rim = conf.rim ?? 0.2;
@@ -417,6 +444,23 @@ else {
     spread,
     rim
   );
+}
+
+if (key === "salami") {
+  // 7 außen + 1 Mitte
+  targets = generateRingPlusCenterTargets(
+    pizza.cx,
+    pizza.cy,
+    safeRadius,
+    7,    // outerCount
+    0.68  // Ring (0.62–0.75 gut)
+  );
+} else if (key === "pepper") {
+  targets = generateOrganicRingTargets(pizza.cx, pizza.cy, safeRadius, conf.pieceCount);
+} else {
+  const spread = conf.spread ?? 0.8;
+  const rim = conf.rim ?? 0.2;
+  targets = generateTargetsTuned(pizza.cx, pizza.cy, safeRadius, conf.pieceCount, spread, rim);
 }
 
   
@@ -769,6 +813,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
