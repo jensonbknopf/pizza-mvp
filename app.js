@@ -129,6 +129,78 @@ function generateSpacedOrganicTargets(cx, cy, radius, count, ring = 0.58, jitter
   return pts;
 }
 
+function generateSpacedRingPlusCenterTargets(cx, cy, radius, outerCount, ring = 0.68, minDistPx = 70) {
+  const pts = [];
+  const start = Math.random() * Math.PI * 2;
+
+  // ---- Outer ring (mit Abstand) ----
+  const maxAttempts = 800;
+
+  for (let i = 0; i < outerCount; i++) {
+    let placed = false;
+    let attempts = 0;
+
+    while (!placed && attempts < maxAttempts) {
+      attempts++;
+
+      let a = start + (i * (Math.PI * 2 / outerCount));
+      a += (Math.random() * 2 - 1) * 0.22; // Winkel-Jitter
+
+      let r = radius * (ring + (Math.random() * 2 - 1) * 0.07); // Radius-Jitter
+
+      const p = { x: cx + Math.cos(a) * r, y: cy + Math.sin(a) * r };
+
+      // Mindestabstand
+      let ok = true;
+      for (let k = 0; k < pts.length; k++) {
+        const dx = p.x - pts[k].x;
+        const dy = p.y - pts[k].y;
+        if (dx*dx + dy*dy < minDistPx*minDistPx) { ok = false; break; }
+      }
+
+      if (ok) {
+        pts.push(p);
+        placed = true;
+      }
+    }
+
+    // Fallback (sollte selten passieren)
+    if (!placed) {
+      pts.push(randomPointInCircle(cx, cy, radius * ring));
+    }
+  }
+
+  // ---- Center (auch Abstand zu Ring beachten) ----
+  let centerPlaced = false;
+  let cAttempts = 0;
+
+  while (!centerPlaced && cAttempts < maxAttempts) {
+    cAttempts++;
+
+    const p = {
+      x: cx + (Math.random() * 2 - 1) * (radius * 0.05),
+      y: cy + (Math.random() * 2 - 1) * (radius * 0.05)
+    };
+
+    let ok = true;
+    for (let k = 0; k < pts.length; k++) {
+      const dx = p.x - pts[k].x;
+      const dy = p.y - pts[k].y;
+      if (dx*dx + dy*dy < minDistPx*minDistPx) { ok = false; break; }
+    }
+
+    if (ok) {
+      pts.push(p);
+      centerPlaced = true;
+    }
+  }
+
+  // Fallback: center not perfect
+  if (!centerPlaced) pts.push({ x: cx, y: cy });
+
+  return pts;
+}
+
 function generateRingPlusCenterTargets(cx, cy, radius, outerCount, ring = 0.62) {
   const pts = [];
   const start = Math.random() * Math.PI * 2;
@@ -488,6 +560,23 @@ else {
   );
 }
 
+if (key === "salami") {
+  targets = generateSpacedRingPlusCenterTargets(
+    pizza.cx,
+    pizza.cy,
+    safeRadius,
+    7,     // außen
+    0.70,  // ring (0.66–0.75 gut)
+    80     // minDistPx (tune!)
+  );
+} else if (key === "pepper") {
+  targets = generateSpacedOrganicTargets(pizza.cx, pizza.cy, safeRadius, conf.pieceCount, 0.58, 0.28, 0.10, 60);
+} else {
+  const spread = conf.spread ?? 0.8;
+  const rim = conf.rim ?? 0.2;
+  targets = generateTargetsTuned(pizza.cx, pizza.cy, safeRadius, conf.pieceCount, spread, rim);
+}
+  
 if (key === "salami") {
   // 7 außen + 1 Mitte
   targets = generateRingPlusCenterTargets(
@@ -855,6 +944,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
