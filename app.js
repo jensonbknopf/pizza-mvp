@@ -53,9 +53,9 @@ salami: {
   label: "Salami",
   icon: "./assets/icons/salami.png",
   pieceImgs: ["./assets/pieces/salami_1.png"],
-  pieceCount: 6,
-  scaleMin: 0.1,
-  scaleMax: 0.1
+  pieceCount: 7,
+  scaleMin: 0.08,
+  scaleMax: 0.08
 },
 
 corn: {
@@ -632,6 +632,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
