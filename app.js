@@ -167,7 +167,7 @@ async function explodeScatterTopping(key, dropX, dropY) {
   toppingNodes.set(key, nodes);
 
   // Zielradius: etwas innerhalb des Pizza-Rands
- const targetRadius = pizza.radius * 0.90;
+ const targetRadius = pizza.radius * 0.86;
 
 // Safe-Radius: damit das ganze Piece im Kreis bleibt
 const maxPiecePx = 28; // grobe Obergrenze in Pixeln (passen wir gleich an)
@@ -193,7 +193,7 @@ const safeRadius = Math.max(10, targetRadius - maxPiecePx);
     const imgSrc = conf.pieceImgs[Math.floor(Math.random() * conf.pieceImgs.length)];
     const img = await loadImage(imgSrc);
 
-    const target = randomPointInCircle(pizza.cx, pizza.cy, targetRadius);
+    const target = randomPointInCircle(pizza.cx, pizza.cy, safeRadius);
 
     // Start: am Ursprung (Drop)
     const startX = originX;
@@ -527,6 +527,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
