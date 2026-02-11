@@ -226,8 +226,8 @@ async function explodeScatterTopping(key, dropX, dropY) {
       x: midX,
       y: midY,
       opacity: rand(0.85, 1.0),
-      scaleX: s * 1.02,
-      scaleY: s * 1.02,
+      scaleX: s * 0.95,
+      scaleY: s * 0.95,
       easing: Konva.Easings.EaseOut,
     });
 
@@ -523,6 +523,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
