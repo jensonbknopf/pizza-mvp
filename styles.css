@@ -15,7 +15,12 @@ body{
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica,, Arial;
   background: radial-gradient(1200px 600px at 50% -10%, #222a3a, var(--bg));
   color: var(--text);
-  overflow: hidden;
+}
+
+html, body {
+  height: auto;
+  min-height: 100%;
+  overflow-x: hidden;
 }
 
 .topbar{
@@ -63,7 +68,7 @@ body{
 }
 
 .main{
-  height: calc(100% - 68px);
+  min-height: calc(100vh - 68px);
   display:flex;
   flex-direction:column;
 }
@@ -188,3 +193,4 @@ body{
 .toppingCard.active .trashBtn{
   display:flex;
 }
+
