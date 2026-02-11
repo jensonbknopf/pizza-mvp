@@ -29,7 +29,7 @@ pepper: {
   pieceCount: 6,
   scaleMin: 0.07,
   scaleMax: 0.08,
-  spread: 0.85, 
+  spread: 0.9, 
   rim: 0.2
 },
 
@@ -40,7 +40,7 @@ mushrooms: {
   pieceCount: 15,
   scaleMin: 0.05,
   scaleMax: 0.07,
-  spread: 0.80, 
+  spread: 0.9, 
   rim: 0.3
 },
 
@@ -48,10 +48,10 @@ garlic: {
   label: "Knoblauch",
   icon: "./assets/icons/garlic.png",
   pieceImgs: ["./assets/pieces/garlic_1.png"],
-  pieceCount: 18,
-  scaleMin: 0.015,
-  scaleMax: 0.02,
-  spread: 0.9, 
+  pieceCount: 25,
+  scaleMin: 0.005,
+  scaleMax: 0.01,
+  spread: 0.95, 
   rim: 0.15 // darf ruhig etwas clusterig
 },
 
@@ -62,7 +62,7 @@ salami: {
   pieceCount: 7,
   scaleMin: 0.07,
   scaleMax: 0.07,
-  spread: 0.90, 
+  spread: 0.95, 
   rim: 0.5
 },
 
@@ -73,7 +73,7 @@ corn: {
   pieceCount: 65,
   scaleMin: 0.065,
   scaleMax: 0.075,
-  spread: 0.70, 
+  spread: 0.5, 
   rim: 0.15 // Mais klumpt oft leicht
 }
 };
@@ -726,6 +726,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
