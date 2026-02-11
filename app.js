@@ -28,9 +28,7 @@ pepper: {
   pieceImgs: ["./assets/pieces/pepper_1.png"],
   pieceCount: 5,
   scaleMin: 0.07,
-  scaleMax: 0.08,
-  spread: 1.0, 
-  rim: 0.5
+  scaleMax: 0.08
 },
 
 mushrooms: {
@@ -93,6 +91,24 @@ const resetBtn = document.getElementById("resetBtn");
 const hint = document.getElementById("hint");
 
 // ---------- Helpers ----------
+function generateRingTargets(cx, cy, radius, count, ring = 0.62, jitterPx = 3) {
+  const pts = [];
+  const r = radius * ring;
+  const start = Math.random() * Math.PI * 2; // optional: jedes Mal leicht gedreht
+
+  for (let i = 0; i < count; i++) {
+    const a = start + (i * (Math.PI * 2 / count));
+    const jx = (Math.random() * 2 - 1) * jitterPx;
+    const jy = (Math.random() * 2 - 1) * jitterPx;
+
+    pts.push({
+      x: cx + Math.cos(a) * r + jx,
+      y: cy + Math.sin(a) * r + jy
+    });
+  }
+  return pts;
+}
+
 function formatEUR(value) {
   // de-DE: 7,50 €
   return value.toLocaleString("de-DE", { style: "currency", currency: "EUR" });
@@ -365,10 +381,23 @@ if (conf.centered) {
 
   hint.style.opacity = "0";
 
+let targets;
+
+if (key === "pepper") {
+  // Paprika bekommt gleichmäßige Ring-Verteilung
+  targets = generateRingTargets(
+    pizza.cx,
+    pizza.cy,
+    safeRadius,
+    conf.pieceCount,
+    0.6,      // Ring-Abstand (0.5–0.7 gut)
+    2.5       // leichte Unregelmäßigkeit
+  );
+} else {
   const spread = conf.spread ?? 0.8;
   const rim = conf.rim ?? 0.2;
-  
-  const targets = generateTargetsTuned(
+
+  targets = generateTargetsTuned(
     pizza.cx,
     pizza.cy,
     safeRadius,
@@ -376,6 +405,8 @@ if (conf.centered) {
     spread,
     rim
   );
+}
+
   
   for (let i = 0; i < conf.pieceCount; i++) {
     const imgSrc = conf.pieceImgs[Math.floor(Math.random() * conf.pieceImgs.length)];
@@ -726,6 +757,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
