@@ -459,8 +459,8 @@ async function startDrag(key, pointerX, pointerY) {
   // Lift-Effekt
   dragGhost.to({
     duration: 0.10,
-    scaleX: 1.05,
-    scaleY: 1.05,
+    scaleX: 0.48,
+    scaleY: 0.48,
     opacity: 1.0,
     easing: Konva.Easings.EaseOut,
   });
@@ -701,6 +701,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
