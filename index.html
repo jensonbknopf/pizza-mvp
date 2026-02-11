@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Pizza Builder MVP</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://unpkg.com/konva@9/konva.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="title">
+      <div class="h1">Pizza 30cm • Tomatensoße</div>
+      <div class="sub">Drag & Drop Zutaten auf die Pizza</div>
+    </div>
+
+    <div class="priceWrap">
+      <div id="priceBadge" class="priceBadge">7,50 €</div>
+      <button id="resetBtn" class="resetBtn" type="button">Alles runter</button>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="stageWrap">
+      <div id="stageContainer" class="stageContainer"></div>
+      <div class="hint" id="hint">Zieh eine Zutat auf die Pizza…</div>
+    </section>
+
+    <section class="tray" aria-label="Zutaten">
+      <div class="trayInner" id="trayInner"></div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

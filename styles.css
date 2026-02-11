@@ -1,0 +1,190 @@
+:root{
+  --bg: #0f1115;
+  --panel: #161a22;
+  --panel2: #1b2130;
+  --text: #eef1f6;
+  --muted: #a9b1c3;
+  --accent: #2dd4bf;
+  --danger: #ff4d4d;
+}
+
+*{ box-sizing: border-box; }
+html, body { height: 100%; }
+body{
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica,, Arial;
+  background: radial-gradient(1200px 600px at 50% -10%, #222a3a, var(--bg));
+  color: var(--text);
+  overflow: hidden;
+}
+
+.topbar{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap: 12px;
+  padding: 14px 14px 10px;
+}
+
+.title .h1{
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: .2px;
+}
+.title .sub{
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.priceWrap{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap: 8px;
+}
+
+.priceBadge{
+  background: linear-gradient(180deg, rgba(45,212,191,.18), rgba(45,212,191,.06));
+  border: 1px solid rgba(45,212,191,.35);
+  padding: 8px 10px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.resetBtn{
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.12);
+  color: var(--text);
+  padding: 8px 10px;
+  border-radius: 10px;
+  font-weight: 650;
+}
+
+.main{
+  height: calc(100% - 68px);
+  display:flex;
+  flex-direction:column;
+}
+
+.stageWrap{
+  position: relative;
+  flex: 1 1 auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding: 6px 10px 0;
+}
+
+.stageContainer{
+  width: 100%;
+  height: 100%;
+  border-radius: 18px;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.06);
+  overflow: hidden;
+}
+
+.hint{
+  position:absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,.35);
+  border: 1px solid rgba(255,255,255,.12);
+  padding: 8px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  color: var(--muted);
+  pointer-events:none;
+}
+
+.tray{
+  flex: 0 0 auto;
+  padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+  background: linear-gradient(180deg, rgba(22,26,34,0), rgba(22,26,34,.75) 18%, rgba(22,26,34,1));
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+
+.trayInner{
+  display:flex;
+  gap: 10px;
+  overflow-x:auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 4px;
+}
+
+.toppingCard{
+  flex: 0 0 auto;
+  width: 98px;
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 14px;
+  padding: 10px;
+  position: relative;
+}
+
+.toppingCard.active{
+  border-color: rgba(45,212,191,.40);
+  box-shadow: 0 0 0 2px rgba(45,212,191,.12) inset;
+}
+
+.toppingRow{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 8px;
+}
+
+.toppingIcon{
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: rgba(0,0,0,.22);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  border: 1px solid rgba(255,255,255,.10);
+}
+
+.toppingIcon img{
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  user-select:none;
+  -webkit-user-drag:none;
+}
+
+.toppingName{
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.toppingPrice{
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.trashBtn{
+  position:absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(0,0,0,.18);
+  color: var(--text);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  font-size: 14px;
+}
+
+.toppingCard.active .trashBtn{
+  display:flex;
+}
