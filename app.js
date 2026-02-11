@@ -442,6 +442,12 @@ window.addEventListener("resize", () => {
   // Base zeichnen
   try {
     await drawPizzaBase();
+    
+  // Fix für Mobile/GitHub Pages: nach erstem Layout nochmal korrekt messen
+setTimeout(async () => {
+  await handleResize();
+}, 80);
+
   } catch (e) {
     console.error(e);
     hint.textContent = "Fehlende Assets? Prüfe assets/base/pizza_base_sauce.png";
@@ -454,3 +460,4 @@ window.addEventListener("resize", () => {
     hint.style.opacity = "1";
   });
 })();
+
