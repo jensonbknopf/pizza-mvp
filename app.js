@@ -222,41 +222,39 @@ async function explodeScatterTopping(key, dropX, dropY) {
   // schon aktiv? -> ignorieren
   if (activeToppings.has(key)) return;
 
-  // Sonderfall: zentriertes Topping (Käse)
-  if (conf.centered) {
-    activeToppings.add(key);
-    updateTrayUI();
-    updatePrice();
+// Sonderfall: zentriertes Topping (Käse)
+if (conf.centered) {
+  activeToppings.add(key);
+  updateTrayUI();
+  updatePrice();
 
-    const img = await loadImage(conf.pieceImgs[0]);
-    const s = conf.scaleMin ?? 0.4;
-    const { x, y, w, h } = pizza.baseBox;
+  const img = await loadImage(conf.pieceImgs[0]);
+  const { x, y, w, h } = pizza.baseBox;
 
-    const node = new Konva.Image({
-      image: img,
-      x,
-      y,
-      width: w,
-      height: h,
-      opacity: 0,
-      listening: false,
-    });
+  const node = new Konva.Image({
+    image: img,
+    x,
+    y,
+    width: w,
+    height: h,
+    opacity: 0,
+    listening: false,
+  });
 
-    };
+  cheeseLayer.add(node);
+  toppingNodes.set(key, [node]);
 
-    cheeseLayer.add(node);
-    toppingNodes.set(key, [node]);
+  node.to({
+    duration: 0.25,
+    opacity: 1,
+    easing: Konva.Easings.EaseOut,
+  });
 
-    node.to({
-      duration: 0.25,
-      opacity: 1,
-      easing: Konva.Easings.EaseOut,
-    });
+  cheeseLayer.draw();
+  hint.style.opacity = "0";
+  return;
+}
 
-    cheeseLayer.draw();
-    hint.style.opacity = "0";
-    return;
-  }
 
   // Normal: Scatter
   activeToppings.add(key);
@@ -617,6 +615,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
