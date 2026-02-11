@@ -91,23 +91,36 @@ const resetBtn = document.getElementById("resetBtn");
 const hint = document.getElementById("hint");
 
 // ---------- Helpers ----------
-function generateRingTargets(cx, cy, radius, count, ring = 0.62, jitterPx = 3) {
+function generateOrganicRingTargets(cx, cy, radius, count) {
   const pts = [];
-  const r = radius * ring;
-  const start = Math.random() * Math.PI * 2; // optional: jedes Mal leicht gedreht
+  const baseRing = 0.60; // Haupt-Ring
+  const start = Math.random() * Math.PI * 2;
 
   for (let i = 0; i < count; i++) {
-    const a = start + (i * (Math.PI * 2 / count));
-    const jx = (Math.random() * 2 - 1) * jitterPx;
-    const jy = (Math.random() * 2 - 1) * jitterPx;
+
+    // Basiswinkel (gleichmäßig)
+    let a = start + (i * (Math.PI * 2 / count));
+
+    // Winkel leicht verschieben (chaos)
+    a += (Math.random() * 2 - 1) * 0.25;
+
+    // Radius leicht variieren (nicht perfekter Kreis)
+    let r = radius * (baseRing + (Math.random() * 2 - 1) * 0.12);
+
+    // 1–2 Stück dürfen leicht weiter innen liegen
+    if (Math.random() < 0.25) {
+      r = radius * (0.35 + Math.random() * 0.15);
+    }
 
     pts.push({
-      x: cx + Math.cos(a) * r + jx,
-      y: cy + Math.sin(a) * r + jy
+      x: cx + Math.cos(a) * r,
+      y: cy + Math.sin(a) * r
     });
   }
+
   return pts;
 }
+
 
 function formatEUR(value) {
   // de-DE: 7,50 €
@@ -384,16 +397,15 @@ if (conf.centered) {
 let targets;
 
 if (key === "pepper") {
-  // Paprika bekommt gleichmäßige Ring-Verteilung
-  targets = generateRingTargets(
+  targets = generateOrganicRingTargets(
     pizza.cx,
     pizza.cy,
     safeRadius,
-    conf.pieceCount,
-    0.6,      // Ring-Abstand (0.5–0.7 gut)
-    2.5       // leichte Unregelmäßigkeit
+    conf.pieceCount
   );
-} else {
+}
+
+else {
   const spread = conf.spread ?? 0.8;
   const rim = conf.rim ?? 0.2;
 
@@ -757,6 +769,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
