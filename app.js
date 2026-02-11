@@ -45,8 +45,8 @@ garlic: {
   icon: "./assets/icons/garlic.png",
   pieceImgs: ["./assets/pieces/garlic_1.png"],
   pieceCount: 18,
-  scaleMin: 0.02,
-  scaleMax: 0.02
+  scaleMin: 0.025,
+  scaleMax: 0.03
 },
 
 salami: {
@@ -63,8 +63,8 @@ corn: {
   icon: "./assets/icons/corn.png",
   pieceImgs: ["./assets/pieces/corn_1.png"],
   pieceCount: 65,
-  scaleMin: 0.06,
-  scaleMax: 0.06
+  scaleMin: 0.065,
+  scaleMax: 0.075
 }
 };
 
@@ -632,6 +632,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
