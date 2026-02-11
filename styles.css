@@ -1,23 +1,18 @@
 :root{
   --bg: #0f1115;
   --panel: #161a22;
-  --panel2: #1b2130;
   --text: #eef1f6;
   --muted: #a9b1c3;
   --accent: #2dd4bf;
-  --danger: #ff4d4d;
 }
 
-*{
-  box-sizing: border-box;
-}
+*{ box-sizing: border-box; }
 
 html, body {
   margin: 0;
   padding: 0;
-  min-height: 100%;
-  height: auto;
-  overflow-x: hidden;
+  height: 100%;
+  overflow: hidden; /* <- wichtig: App-Layout, kein Seiten-Scroll */
 }
 
 body{
@@ -26,8 +21,7 @@ body{
   color: var(--text);
 }
 
-/* ---------------- HEADER ---------------- */
-
+/* Header */
 .topbar{
   display:flex;
   align-items:flex-start;
@@ -36,17 +30,8 @@ body{
   padding: 14px 14px 10px;
 }
 
-.title .h1{
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: .2px;
-}
-
-.title .sub{
-  margin-top: 2px;
-  font-size: 12px;
-  color: var(--muted);
-}
+.title .h1{ font-size: 16px; font-weight: 700; }
+.title .sub{ margin-top: 2px; font-size: 12px; color: var(--muted); }
 
 .priceWrap{
   display:flex;
@@ -73,35 +58,32 @@ body{
   font-weight: 650;
 }
 
-/* ---------------- MAIN LAYOUT ---------------- */
-
+/* -------- APP LAYOUT (WICHTIG) -------- */
 .main{
-  min-height: calc(100vh - 68px);
+  height: calc(100dvh - 68px); /* dynamische Viewport-Höhe am Handy */
   display:flex;
   flex-direction:column;
+  overflow: hidden;
 }
 
-/* ---------------- STAGE ---------------- */
-
+/* Bühne nimmt den Platz über der Zutatenleiste ein */
 .stageWrap{
   position: relative;
   flex: 1 1 auto;
-  display:flex;
-  align-items:center;
-  justify-content:center;
   padding: 6px 10px 0;
+  min-height: 260px;
 }
 
 .stageContainer{
   width: 100%;
   height: 100%;
-  min-height: 300px;
   border-radius: 18px;
   background: rgba(255,255,255,.03);
   border: 1px solid rgba(255,255,255,.06);
   overflow: hidden;
 }
 
+/* Hint */
 .hint{
   position:absolute;
   bottom: 14px;
@@ -116,17 +98,11 @@ body{
   pointer-events:none;
 }
 
-/* ---------------- TRAY ---------------- */
-
+/* -------- Tray fix unten -------- */
 .tray{
   flex: 0 0 auto;
   padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
-  background: linear-gradient(
-    180deg,
-    rgba(22,26,34,0),
-    rgba(22,26,34,.75) 18%,
-    rgba(22,26,34,1)
-  );
+  background: linear-gradient(180deg, rgba(22,26,34,0), rgba(22,26,34,.75) 18%, rgba(22,26,34,1));
   border-top: 1px solid rgba(255,255,255,.08);
 }
 
@@ -137,8 +113,6 @@ body{
   -webkit-overflow-scrolling: touch;
   padding-bottom: 4px;
 }
-
-/* ---------------- TOPPING CARD ---------------- */
 
 .toppingCard{
   flex: 0 0 auto;
@@ -155,16 +129,8 @@ body{
   box-shadow: 0 0 0 2px rgba(45,212,191,.12) inset;
 }
 
-.toppingRow{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap: 8px;
-}
-
 .toppingIcon{
-  width: 46px;
-  height: 46px;
+  width: 46px; height: 46px;
   border-radius: 12px;
   background: rgba(0,0,0,.22);
   display:flex;
@@ -173,35 +139,20 @@ body{
   overflow:hidden;
   border: 1px solid rgba(255,255,255,.10);
 }
-
 .toppingIcon img{
-  width: 40px;
-  height: 40px;
+  width: 40px; height: 40px;
   object-fit: contain;
   user-select:none;
   -webkit-user-drag:none;
 }
 
-.toppingName{
-  margin-top: 8px;
-  font-size: 13px;
-  font-weight: 750;
-}
-
-.toppingPrice{
-  margin-top: 2px;
-  font-size: 12px;
-  color: var(--muted);
-}
-
-/* ---------------- TRASH BUTTON ---------------- */
+.toppingName{ margin-top: 8px; font-size: 13px; font-weight: 750; }
+.toppingPrice{ margin-top: 2px; font-size: 12px; color: var(--muted); }
 
 .trashBtn{
   position:absolute;
-  top: 8px;
-  right: 8px;
-  width: 28px;
-  height: 28px;
+  top: 8px; right: 8px;
+  width: 28px; height: 28px;
   border-radius: 10px;
   border: 1px solid rgba(255,255,255,.14);
   background: rgba(0,0,0,.18);
@@ -211,7 +162,5 @@ body{
   justify-content:center;
   font-size: 14px;
 }
+.toppingCard.active .trashBtn{ display:flex; }
 
-.toppingCard.active .trashBtn{
-  display:flex;
-}
