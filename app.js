@@ -225,8 +225,9 @@ const safeRadius = Math.max(10, targetRadius - maxPiecePx);
   const blastMax = 70;
 
   // Optik-Varianz
-  const scaleMin = 0.05;
-  const scaleMax = 0.08;
+  const scaleMin = conf.scaleMin ?? 0.3;
+const scaleMax = conf.scaleMax ?? 0.6;
+
 
   // Wenn Drop-Punkt außerhalb Pizza liegt (kann bei schnellen Drags passieren),
   // setzen wir Explosion auf Pizza-Zentrum
@@ -574,6 +575,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
