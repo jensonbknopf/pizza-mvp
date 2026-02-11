@@ -94,14 +94,22 @@ function updatePrice() {
   priceBadge.textContent = formatEUR(total);
 }
 
+const ASSET_VERSION = "v12"; // bei Änderungen hochzählen (v13, v14 ...)
+
 function loadImage(src) {
-  if (imageCache.has(src)) return Promise.resolve(imageCache.get(src));
+  const abs = new URL(src, document.baseURI).toString();
+  const absBusted = abs + (abs.includes("?") ? "&" : "?") + "cb=" + ASSET_VERSION;
+
+  if (imageCache.has(absBusted)) return Promise.resolve(imageCache.get(absBusted));
 
   return new Promise((resolve, reject) => {
     const img = new Image();
-    img.onload = () => { imageCache.set(src, img); resolve(img); };
-    img.onerror = () => reject(new Error(`Image failed: ${src}`));
-    img.src = src;
+    img.onload = () => { imageCache.set(absBusted, img); resolve(img); };
+    img.onerror = () => {
+      console.error("❌ Image failed:", absBusted);
+      reject(new Error(`Image failed: ${absBusted}`));
+    };
+    img.src = absBusted;
   });
 }
 
@@ -701,6 +709,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
