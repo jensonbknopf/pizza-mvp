@@ -317,7 +317,12 @@ if (conf.centered) {
 
   hint.style.opacity = "0";
 
-  const targets = generateEvenPointsInCircle(pizza.cx, pizza.cy, safeRadius, conf.pieceCount);
+  const targets = generateEvenPointsInCircle(
+  pizza.cx,
+  pizza.cy,
+  safeRadius,
+  conf.pieceCount
+  );
 
   for (let i = 0; i < conf.pieceCount; i++) {
     const imgSrc = conf.pieceImgs[Math.floor(Math.random() * conf.pieceImgs.length)];
@@ -668,6 +673,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
