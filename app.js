@@ -1,3 +1,11 @@
+// Long-press / Drag Steuerung
+const LONG_PRESS_MS = 280;      // fühlt sich “lockig” an (250–350 gut)
+const MOVE_CANCEL_PX = 10;      // wenn man vorher wischt -> kein Drag
+let pressTimer = null;
+let pressStart = null;          // {x,y}
+let pendingKey = null;
+let isLongPressArmed = false;   // Long-press wurde ausgelöst, Drag darf starten
+
 // ---------- Preise ----------
 const BASE_PRICE = 7.50;
 const TOPPING_PRICE = 0.50;
@@ -370,45 +378,96 @@ function buildTray() {
     card.appendChild(price);
 
     // Pointer Events für Drag (Touch + Maus)
-    card.addEventListener("pointerdown", async (ev) => {
-      // Wenn auf Trash geklickt wurde, nicht draggen
-      if (ev.target && ev.target.classList.contains("trashBtn")) return;
+   card.addEventListener("pointerdown", (ev) => {
+  if (ev.target && ev.target.classList.contains("trashBtn")) return;
 
-      card.setPointerCapture(ev.pointerId);
-      const rect = stageContainer.getBoundingClientRect();
-      const px = ev.clientX - rect.left;
-      const py = ev.clientY - rect.top;
+  // Wichtig: NICHT sofort Pointer capture, sonst killt das Scrollen
+  const rect = stageContainer.getBoundingClientRect();
+  const x = ev.clientX - rect.left;
+  const y = ev.clientY - rect.top;
 
-      await startDrag(key, px, py);
-    });
+  pendingKey = key;
+  pressStart = { x: ev.clientX, y: ev.clientY };
+  isLongPressArmed = false;
 
-    card.addEventListener("pointermove", (ev) => {
-      if (!dragGhost) return;
-      const rect = stageContainer.getBoundingClientRect();
-      const px = ev.clientX - rect.left;
-      const py = ev.clientY - rect.top;
-      moveDrag(px, py);
-    });
+  // Long-press starten
+  clearTimeout(pressTimer);
+  pressTimer = setTimeout(async () => {
+    isLongPressArmed = true;
 
-    card.addEventListener("pointerup", async (ev) => {
-      if (!dragGhost) return;
-      const rect = stageContainer.getBoundingClientRect();
-      const px = ev.clientX - rect.left;
-      const py = ev.clientY - rect.top;
-      await endDrag(px, py);
-    });
+    // jetzt erst Drag starten
+    await startDrag(pendingKey, x, y);
 
-    card.addEventListener("pointercancel", async (ev) => {
-      if (!dragGhost) return;
-      const rect = stageContainer.getBoundingClientRect();
-      const px = ev.clientX - rect.left;
-      const py = ev.clientY - rect.top;
-      await endDrag(px, py);
-    });
+    // jetzt dürfen wir capture setzen (erst wenn Drag wirklich aktiv ist)
+    try { card.setPointerCapture(ev.pointerId); } catch {}
+  }, LONG_PRESS_MS);
+});
 
-    trayInner.appendChild(card);
-  });
+card.addEventListener("pointermove", (ev) => {
+  // Wenn noch kein Long-press: prüfen ob User scrollt/wischt -> abbrechen
+  if (!dragGhost && pressStart) {
+    const dx = ev.clientX - pressStart.x;
+    const dy = ev.clientY - pressStart.y;
 
+    if (Math.hypot(dx, dy) > MOVE_CANCEL_PX) {
+      clearTimeout(pressTimer);
+      pressTimer = null;
+      pendingKey = null;
+      pressStart = null;
+      isLongPressArmed = false;
+      return; // normales Scrollen läuft weiter
+    }
+    return;
+  }
+
+  // Wenn Drag aktiv: Ghost bewegen
+  if (dragGhost) {
+    ev.preventDefault(); // während Drag: nicht scrollen
+    const rect = stageContainer.getBoundingClientRect();
+    const x = ev.clientX - rect.left;
+    const y = ev.clientY - rect.top;
+    moveDrag(x, y);
+  }
+}, { passive: false });
+
+card.addEventListener("pointerup", async (ev) => {
+  clearTimeout(pressTimer);
+  pressTimer = null;
+
+  // Wenn Drag nie gestartet wurde: war nur Tap/Scroll
+  if (!dragGhost) {
+    pendingKey = null;
+    pressStart = null;
+    isLongPressArmed = false;
+    return;
+  }
+
+  const rect = stageContainer.getBoundingClientRect();
+  const x = ev.clientX - rect.left;
+  const y = ev.clientY - rect.top;
+  await endDrag(x, y);
+
+  pendingKey = null;
+  pressStart = null;
+  isLongPressArmed = false;
+});
+
+card.addEventListener("pointercancel", async (ev) => {
+  clearTimeout(pressTimer);
+  pressTimer = null;
+
+  if (dragGhost) {
+    const rect = stageContainer.getBoundingClientRect();
+    const x = ev.clientX - rect.left;
+    const y = ev.clientY - rect.top;
+    await endDrag(x, y);
+  }
+
+  pendingKey = null;
+  pressStart = null;
+  isLongPressArmed = false;
+});  
+  
   updateTrayUI();
 }
 
@@ -460,4 +519,5 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
