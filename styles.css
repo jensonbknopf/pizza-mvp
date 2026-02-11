@@ -75,7 +75,7 @@ body{
 /* ---------------- MAIN ---------------- */
 
 .main{
-  height: calc(100dvh - var(--headerH));
+  height: calc(100vh - var(--headerH) - var(--trayH) - 42px);
   display:flex;
   flex-direction:column;
   overflow:hidden;
@@ -206,6 +206,7 @@ body{
 .toppingCard.active .trashBtn{
   display:flex;
 }
+
 
 
 
