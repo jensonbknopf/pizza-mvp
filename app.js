@@ -212,8 +212,46 @@ async function explodeScatterTopping(key, dropX, dropY) {
   updatePrice();
 
   const conf = TOPPINGS[key];
-  const nodes = [];
-  toppingNodes.set(key, nodes);
+ // Sonderfall: zentriertes Topping (z.B. Käse)
+if (conf.centered) {
+
+  if (activeToppings.has(key)) return;
+
+  activeToppings.add(key);
+  updateTrayUI();
+  updatePrice();
+
+  const img = await loadImage(conf.pieceImgs[0]);
+
+  const s = conf.scaleMin ?? 0.8;
+
+  const node = new Konva.Image({
+    image: img,
+    x: pizza.cx,
+    y: pizza.cy,
+    offsetX: img.width / 2,
+    offsetY: img.height / 2,
+    scaleX: s,
+    scaleY: s,
+    opacity: 0,
+    listening: false,
+  });
+
+  toppingLayer.add(node);
+  toppingNodes.set(key, [node]);
+
+  // kleines Einblend-Animation
+  node.to({
+    duration: 0.25,
+    opacity: 1,
+    easing: Konva.Easings.EaseOut
+  });
+
+  toppingLayer.draw();
+  hint.style.opacity = "0";
+  return;
+}
+
 
   // Zielradius: etwas innerhalb des Pizza-Rands
  const targetRadius = pizza.radius * 0.9;
@@ -577,6 +615,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
