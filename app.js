@@ -217,9 +217,7 @@ async function explodeScatterTopping(key, dropX, dropY) {
   // schon aktiv? -> ignorieren
   if (activeToppings.has(key)) return;
 
-  // ----------------------------
-  // Sonderfall: zentriertes Topping (z.B. Käse)
-  // ----------------------------
+  // Sonderfall: zentriertes Topping (Käse)
   if (conf.centered) {
     activeToppings.add(key);
     updateTrayUI();
@@ -254,9 +252,7 @@ async function explodeScatterTopping(key, dropX, dropY) {
     return;
   }
 
-  // ----------------------------
-  // Normal: Scatter-Topping
-  // ----------------------------
+  // Normal: Scatter
   activeToppings.add(key);
   updateTrayUI();
   updatePrice();
@@ -264,22 +260,18 @@ async function explodeScatterTopping(key, dropX, dropY) {
   const nodes = [];
   toppingNodes.set(key, nodes);
 
-  // Zielradius: innerhalb des Pizza-Rands
   const targetRadius = pizza.radius * 0.90;
 
-  // Safe-Radius damit Pieces nicht über den Rand ragen
-  const maxPiecePx = 28; // konservativ
+  // safe radius damit pieces im Kreis bleiben
+  const maxPiecePx = 28;
   const safeRadius = Math.max(10, targetRadius - maxPiecePx);
 
-  // Explosion feel
   const blastMin = 22;
   const blastMax = 70;
 
-  // Größen pro Topping
-  const scaleMin = conf.scaleMin ?? 0.08;
-  const scaleMax = conf.scaleMax ?? 0.12;
+  const scaleMin = conf.scaleMin ?? 0.06;
+  const scaleMax = conf.scaleMax ?? 0.10;
 
-  // Ursprung: Drop oder Center
   const dropInside = isInsideCircle(dropX, dropY, pizza.cx, pizza.cy, pizza.radius);
   const originX = dropInside ? dropX : pizza.cx;
   const originY = dropInside ? dropY : pizza.cy;
@@ -309,14 +301,13 @@ async function explodeScatterTopping(key, dropX, dropY) {
       scaleX: s,
       scaleY: s,
       rotation,
-      opacity: 0.0,
+      opacity: 0,
       listening: false,
     });
 
     nodes.push(node);
     toppingLayer.add(node);
 
-    // Phase 1: blast
     node.to({
       duration: rand(0.10, 0.16),
       x: midX,
@@ -327,7 +318,6 @@ async function explodeScatterTopping(key, dropX, dropY) {
       easing: Konva.Easings.EaseOut,
     });
 
-    // Phase 2: settle
     node.to({
       duration: rand(0.22, 0.34),
       delay: rand(0.08, 0.14),
@@ -341,10 +331,8 @@ async function explodeScatterTopping(key, dropX, dropY) {
   }
 
   toppingLayer.draw();
-  setTimeout(() => {
-    hint.style.opacity = activeToppings.size ? "0" : "1";
-  }, 250);
 }
+
 
 
   // Zielradius: etwas innerhalb des Pizza-Rands
@@ -709,6 +697,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
