@@ -4,25 +4,22 @@
   --muted: #a9b1c3;
   --accent: #2dd4bf;
 
-  /* feste, planbare Höhe der Zutatenleiste */
-  --trayH: 160px;
-  /* Header-Höhe (bei dir ungefähr) */
   --headerH: 74px;
+  --trayH: 150px;
 }
 
-*{ box-sizing: border-box; }
+*{
+  box-sizing: border-box;
+}
 
 html, body{
   margin: 0;
   padding: 0;
   height: 100%;
-  overflow-x: hidden;
+  overflow: hidden; /* WICHTIG: kein Scroll */
 }
 
-/* WICHTIG: Scroll wieder erlauben, damit nix “geclippt” wird */
 body{
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
   background: radial-gradient(1200px 600px at 50% -10%, #222a3a, var(--bg));
   color: var(--text);
@@ -31,6 +28,7 @@ body{
 /* ---------------- HEADER ---------------- */
 
 .topbar{
+  height: var(--headerH);
   display:flex;
   align-items:flex-start;
   justify-content:space-between;
@@ -38,8 +36,16 @@ body{
   padding: 14px 14px 10px;
 }
 
-.title .h1{ font-size: 16px; font-weight: 700; }
-.title .sub{ margin-top: 2px; font-size: 12px; color: var(--muted); }
+.title .h1{
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.title .sub{
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--muted);
+}
 
 .priceWrap{
   display:flex;
@@ -67,21 +73,19 @@ body{
 }
 
 /* ---------------- MAIN ---------------- */
-/* 100svh ist auf Mobile stabiler als 100vh/100dvh in vielen Fällen */
+
 .main{
-  min-height: calc(100svh - var(--headerH));
+  height: calc(100vh - var(--headerH));
   display:flex;
   flex-direction:column;
-  padding-bottom: calc(env(safe-area-inset-bottom) + 8px);
+  overflow:hidden;
 }
 
 /* ---------------- STAGE ---------------- */
-/* Bühne bekommt fix den Platz, der übrig bleibt – damit die Tray nie abgeschnitten wird */
+
 .stageWrap{
-  position: relative;
-  padding: 8px 12px 10px;
-  height: calc(100svh - var(--headerH) - var(--trayH) - 10px);
-  min-height: 320px; /* falls sehr kleines Display */
+  height: calc(100vh - var(--headerH) - var(--trayH));
+  padding: 8px 12px;
 }
 
 .stageContainer{
@@ -108,10 +112,8 @@ body{
 }
 
 /* ---------------- TRAY ---------------- */
-/* Sticky: bleibt unten sichtbar, aber ohne das “clippen” von overflow hidden */
+
 .tray{
-  position: sticky;
-  bottom: 0;
   height: var(--trayH);
   padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
   background: linear-gradient(
@@ -128,7 +130,6 @@ body{
   gap: 10px;
   overflow-x:auto;
   -webkit-overflow-scrolling: touch;
-  padding-bottom: 4px;
 }
 
 /* ---------------- TOPPING CARD ---------------- */
@@ -149,7 +150,8 @@ body{
 }
 
 .toppingIcon{
-  width: 46px; height: 46px;
+  width: 46px;
+  height: 46px;
   border-radius: 12px;
   background: rgba(0,0,0,.22);
   display:flex;
@@ -160,19 +162,31 @@ body{
 }
 
 .toppingIcon img{
-  width: 40px; height: 40px;
+  width: 40px;
+  height: 40px;
   object-fit: contain;
   user-select:none;
   -webkit-user-drag:none;
 }
 
-.toppingName{ margin-top: 8px; font-size: 13px; font-weight: 750; }
-.toppingPrice{ margin-top: 2px; font-size: 12px; color: var(--muted); }
+.toppingName{
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.toppingPrice{
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--muted);
+}
 
 .trashBtn{
   position:absolute;
-  top: 8px; right: 8px;
-  width: 28px; height: 28px;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
   border-radius: 10px;
   border: 1px solid rgba(255,255,255,.14);
   background: rgba(0,0,0,.18);
@@ -183,6 +197,6 @@ body{
   font-size: 14px;
 }
 
-.toppingCard.active .trashBtn{ display:flex; }
-
-
+.toppingCard.active .trashBtn{
+  display:flex;
+}
