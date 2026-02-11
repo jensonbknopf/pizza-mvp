@@ -36,8 +36,8 @@ mushrooms: {
   icon: "./assets/icons/mushrooms.png",
   pieceImgs: ["./assets/pieces/mushrooms_1.png"],
   pieceCount: 15,
-  scaleMin: 0.05,
-  scaleMax: 0.05
+  scaleMin: 0.06,
+  scaleMax: 0.06
 },
 
 garlic: {
@@ -632,5 +632,6 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
