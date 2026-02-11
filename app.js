@@ -547,7 +547,7 @@ function buildTray() {
     iconWrap.className = "toppingIcon";
 
     const img = document.createElement("img");
-    img.src = t.icon;
+    img.src = new URL(t.icon, document.baseURI).toString() + "?cb=" + ASSET_VERSION;
     img.alt = t.label;
     iconWrap.appendChild(img);
 
@@ -709,6 +709,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
