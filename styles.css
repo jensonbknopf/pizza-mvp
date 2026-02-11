@@ -141,13 +141,14 @@ body{
   padding: 14px 14px calc(22px + env(safe-area-inset-bottom));
   background: var(--surface);
   border-top: 1px solid var(--border);
-}
+  }
 
 .trayInner{
   display:flex;
   gap: 12px;
-  overflow-x:auto;
+  overflow-x:auto;  
   -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
 }
 
 /* ---------------- TOPPING CARDS ---------------- */
@@ -220,4 +221,5 @@ body{
 .toppingCard.active .trashBtn{
   display:flex;
 }
+
 
