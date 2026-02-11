@@ -14,7 +14,7 @@ const TOPPING_PRICE = 0.50;
 const TOPPINGS = {
   cheese:    { label: "Käse",      icon: "./assets/icons/cheese.png",    pieceImgs: ["./assets/pieces/cheese_1.png"],    pieceCount: 100 },
   pepper:    { label: "Paprika",   icon: "./assets/icons/pepper.png",    pieceImgs: ["./assets/pieces/pepper_1.png"],    pieceCount: 35 },
-  mushrooms: { label: "Pilze",     icon: "./assets/icons/mushrooms.png", pieceImgs: ["./assets/pieces/mushrooms_1.png"], pieceCount: 26 },
+  mushrooms: { label: "Pilze",     icon: "./assets/icons/mushrooms.png", pieceImgs: ["./assets/pieces/mushrooms_1.png"], pieceCount: 10 },
   garlic:    { label: "Knoblauch", icon: "./assets/icons/garlic.png",    pieceImgs: ["./assets/pieces/garlic_1.png"],    pieceCount: 18 },
   salami:    { label: "Salami",    icon: "./assets/icons/salami.png",    pieceImgs: ["./assets/pieces/salami_1.png"],    pieceCount: 5 },
   corn:      { label: "Mais",      icon: "./assets/icons/corn.png",      pieceImgs: ["./assets/pieces/corn_1.png"],      pieceCount: 40 },
@@ -527,6 +527,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
