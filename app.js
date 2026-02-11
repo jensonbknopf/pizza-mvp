@@ -29,7 +29,7 @@ pepper: {
   pieceCount: 6,
   scaleMin: 0.07,
   scaleMax: 0.08,
-  spread: 0.9, 
+  spread: 1.0, 
   rim: 0.2
 },
 
@@ -726,6 +726,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
