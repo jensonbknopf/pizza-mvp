@@ -38,8 +38,8 @@ mushrooms: {
   icon: "./assets/icons/mushrooms.png",
   pieceImgs: ["./assets/pieces/mushrooms_1.png"],
   pieceCount: 15,
-  scaleMin: 0.05,
-  scaleMax: 0.07,
+  scaleMin: 0.03,
+  scaleMax: 0.06,
   spread: 0.9, 
   rim: 0.3
 },
@@ -815,6 +815,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
