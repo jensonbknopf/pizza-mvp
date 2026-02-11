@@ -12,16 +12,15 @@ const TOPPING_PRICE = 0.50;
 
 // ---------- Toppings ----------
 const TOPPINGS = {
-  cheese:    { label: "Käse",      icon: "assets/icons/cheese.png",    pieceImgs: ["assets/pieces/cheese_1.png"],    pieceCount: 55 },
-  pepper:    { label: "Paprika",   icon: "assets/icons/pepper.png",    pieceImgs: ["assets/pieces/pepper_1.png"],    pieceCount: 35 },
-  mushrooms: { label: "Pilze",     icon: "assets/icons/mushrooms.png", pieceImgs: ["assets/pieces/mushrooms_1.png"], pieceCount: 26 },
-  garlic:    { label: "Knoblauch", icon: "assets/icons/garlic.png",    pieceImgs: ["assets/pieces/garlic_1.png"],    pieceCount: 18 },
-  salami:    { label: "Salami",    icon: "assets/icons/salami.png",    pieceImgs: ["assets/pieces/salami_1.png"],    pieceCount: 16 },
-  corn:      { label: "Mais",      icon: "assets/icons/corn.png",      pieceImgs: ["assets/pieces/corn_1.png"],      pieceCount: 40 },
+  cheese:    { label: "Käse",      icon: "./assets/icons/cheese.png",    pieceImgs: ["./assets/pieces/cheese_1.png"],    pieceCount: 55 },
+  pepper:    { label: "Paprika",   icon: "./assets/icons/pepper.png",    pieceImgs: ["./assets/pieces/pepper_1.png"],    pieceCount: 35 },
+  mushrooms: { label: "Pilze",     icon: "./assets/icons/mushrooms.png", pieceImgs: ["./assets/pieces/mushrooms_1.png"], pieceCount: 26 },
+  garlic:    { label: "Knoblauch", icon: "./assets/icons/garlic.png",    pieceImgs: ["./assets/pieces/garlic_1.png"],    pieceCount: 18 },
+  salami:    { label: "Salami",    icon: "./assets/icons/salami.png",    pieceImgs: ["./assets/pieces/salami_1.png"],    pieceCount: 16 },
+  corn:      { label: "Mais",      icon: "./assets/icons/corn.png",      pieceImgs: ["./assets/pieces/corn_1.png"],      pieceCount: 40 },
 };
 
-const BASE_IMG = "assets/base/pizza_base_sauce.png";
-
+const BASE_IMG = "./assets/base/pizza_base_sauce.png";
 
 // ---------- State ----------
 const activeToppings = new Set();                 // keys
@@ -342,6 +341,7 @@ function buildTray() {
     card.className = "toppingCard";
     card.dataset.key = key;
 
+    // Trash
     const trash = document.createElement("button");
     trash.className = "trashBtn";
     trash.type = "button";
@@ -353,11 +353,13 @@ function buildTray() {
       if (activeToppings.size === 0) hint.style.opacity = "1";
     });
 
+    // Row (Icon)
     const row = document.createElement("div");
     row.className = "toppingRow";
 
     const iconWrap = document.createElement("div");
     iconWrap.className = "toppingIcon";
+
     const img = document.createElement("img");
     img.src = t.icon;
     img.alt = t.label;
@@ -365,6 +367,7 @@ function buildTray() {
 
     row.appendChild(iconWrap);
 
+    // Name + Price
     const name = document.createElement("div");
     name.className = "toppingName";
     name.textContent = t.label;
@@ -373,102 +376,102 @@ function buildTray() {
     price.className = "toppingPrice";
     price.textContent = `+ ${formatEUR(TOPPING_PRICE)}`;
 
+    // Assemble card
     card.appendChild(trash);
     card.appendChild(row);
     card.appendChild(name);
     card.appendChild(price);
 
-    // Pointer Events für Drag (Touch + Maus)
-   card.addEventListener("pointerdown", (ev) => {
-  if (ev.target && ev.target.classList.contains("trashBtn")) return;
+    // ---- Long-press / Lock Drag ----
+    card.addEventListener("pointerdown", (ev) => {
+      if (ev.target && ev.target.classList.contains("trashBtn")) return;
 
-  // Wichtig: NICHT sofort Pointer capture, sonst killt das Scrollen
-  const rect = stageContainer.getBoundingClientRect();
-  const x = ev.clientX - rect.left;
-  const y = ev.clientY - rect.top;
+      pendingKey = key;
+      pressStart = { x: ev.clientX, y: ev.clientY };
+      isLongPressArmed = false;
 
-  pendingKey = key;
-  pressStart = { x: ev.clientX, y: ev.clientY };
-  isLongPressArmed = false;
+      clearTimeout(pressTimer);
+      pressTimer = setTimeout(async () => {
+        isLongPressArmed = true;
 
-  // Long-press starten
-  clearTimeout(pressTimer);
-  pressTimer = setTimeout(async () => {
-    isLongPressArmed = true;
+        const rect = stageContainer.getBoundingClientRect();
+        const x = ev.clientX - rect.left;
+        const y = ev.clientY - rect.top;
 
-    // jetzt erst Drag starten
-    await startDrag(pendingKey, x, y);
+        await startDrag(pendingKey, x, y);
 
-    // jetzt dürfen wir capture setzen (erst wenn Drag wirklich aktiv ist)
-    try { card.setPointerCapture(ev.pointerId); } catch {}
-  }, LONG_PRESS_MS);
-});
+        // Capture erst wenn Drag wirklich aktiv ist
+        try { card.setPointerCapture(ev.pointerId); } catch {}
+      }, LONG_PRESS_MS);
+    });
 
-card.addEventListener("pointermove", (ev) => {
-  // Wenn noch kein Long-press: prüfen ob User scrollt/wischt -> abbrechen
-  if (!dragGhost && pressStart) {
-    const dx = ev.clientX - pressStart.x;
-    const dy = ev.clientY - pressStart.y;
+    card.addEventListener("pointermove", (ev) => {
+      // Noch kein Long-press: wenn User bewegt -> als Scroll interpretieren, Long-press canceln
+      if (!dragGhost && pressStart) {
+        const dx = ev.clientX - pressStart.x;
+        const dy = ev.clientY - pressStart.y;
 
-    if (Math.hypot(dx, dy) > MOVE_CANCEL_PX) {
+        if (Math.hypot(dx, dy) > MOVE_CANCEL_PX) {
+          clearTimeout(pressTimer);
+          pressTimer = null;
+          pendingKey = null;
+          pressStart = null;
+          isLongPressArmed = false;
+        }
+        return;
+      }
+
+      // Drag aktiv: Ghost bewegen
+      if (dragGhost) {
+        ev.preventDefault();
+        const rect = stageContainer.getBoundingClientRect();
+        const x = ev.clientX - rect.left;
+        const y = ev.clientY - rect.top;
+        moveDrag(x, y);
+      }
+    }, { passive: false });
+
+    card.addEventListener("pointerup", async (ev) => {
       clearTimeout(pressTimer);
       pressTimer = null;
+
+      // Drag nie gestartet -> Tap/Scroll
+      if (!dragGhost) {
+        pendingKey = null;
+        pressStart = null;
+        isLongPressArmed = false;
+        return;
+      }
+
+      const rect = stageContainer.getBoundingClientRect();
+      const x = ev.clientX - rect.left;
+      const y = ev.clientY - rect.top;
+      await endDrag(x, y);
+
       pendingKey = null;
       pressStart = null;
       isLongPressArmed = false;
-      return; // normales Scrollen läuft weiter
-    }
-    return;
-  }
+    });
 
-  // Wenn Drag aktiv: Ghost bewegen
-  if (dragGhost) {
-    ev.preventDefault(); // während Drag: nicht scrollen
-    const rect = stageContainer.getBoundingClientRect();
-    const x = ev.clientX - rect.left;
-    const y = ev.clientY - rect.top;
-    moveDrag(x, y);
-  }
-}, { passive: false });
+    card.addEventListener("pointercancel", async (ev) => {
+      clearTimeout(pressTimer);
+      pressTimer = null;
 
-card.addEventListener("pointerup", async (ev) => {
-  clearTimeout(pressTimer);
-  pressTimer = null;
+      if (dragGhost) {
+        const rect = stageContainer.getBoundingClientRect();
+        const x = ev.clientX - rect.left;
+        const y = ev.clientY - rect.top;
+        await endDrag(x, y);
+      }
 
-  // Wenn Drag nie gestartet wurde: war nur Tap/Scroll
-  if (!dragGhost) {
-    pendingKey = null;
-    pressStart = null;
-    isLongPressArmed = false;
-    return;
-  }
+      pendingKey = null;
+      pressStart = null;
+      isLongPressArmed = false;
+    });
 
-  const rect = stageContainer.getBoundingClientRect();
-  const x = ev.clientX - rect.left;
-  const y = ev.clientY - rect.top;
-  await endDrag(x, y);
+    trayInner.appendChild(card);
+  });
 
-  pendingKey = null;
-  pressStart = null;
-  isLongPressArmed = false;
-});
-
-card.addEventListener("pointercancel", async (ev) => {
-  clearTimeout(pressTimer);
-  pressTimer = null;
-
-  if (dragGhost) {
-    const rect = stageContainer.getBoundingClientRect();
-    const x = ev.clientX - rect.left;
-    const y = ev.clientY - rect.top;
-    await endDrag(x, y);
-  }
-
-  pendingKey = null;
-  pressStart = null;
-  isLongPressArmed = false;
-});  
-  
   updateTrayUI();
 }
 
@@ -520,6 +523,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
