@@ -16,7 +16,7 @@ html, body{
   margin: 0;
   padding: 0;
   height: 100%;
-  overflow: hidden; /* WICHTIG: kein Scroll */
+  overflow: hidden; /* unscrollbar */
 }
 
 body{
@@ -24,6 +24,7 @@ body{
   background: radial-gradient(1200px 600px at 50% -10%, #222a3a, var(--bg));
   color: var(--text);
 }
+
 
 /* ---------------- HEADER ---------------- */
 
@@ -75,16 +76,19 @@ body{
 /* ---------------- MAIN ---------------- */
 
 .main{
-  height: calc(100vh - var(--headerH) - var(--trayH) - 42px);
+  height: calc(100dvh - var(--headerH)); /* dynamischer Viewport */
   display:flex;
   flex-direction:column;
   overflow:hidden;
 }
 
+
 /* ---------------- STAGE ---------------- */
 
 .stageWrap{
-  height: calc(100vh - var(--headerH) - var(--trayH));
+  position: relative;
+  flex: 1 1 auto;      /* nimmt den kompletten Rest ein */
+  min-height: 0;       /* verhindert Flex-Bugs */
   padding: 8px 12px;
 }
 
@@ -112,14 +116,27 @@ body{
 /* ---------------- TRAY ---------------- */
 
 .hintRow{
-  height: 42px;              /* feste Zeile zwischen Pizza & Tray */
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  flex: 0 0 auto;
+  height: 42px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   padding: 0 12px 6px;
 }
 
+.hint{
+  display:inline-block;
+  background: rgba(0,0,0,.35);
+  border: 1px solid rgba(255,255,255,.12);
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  color: var(--muted);
+  pointer-events:none;
+}
+
 .tray{
+  flex: 0 0 auto;
   height: var(--trayH);
   padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
   background: linear-gradient(
@@ -206,6 +223,7 @@ body{
 .toppingCard.active .trashBtn{
   display:flex;
 }
+
 
 
 
