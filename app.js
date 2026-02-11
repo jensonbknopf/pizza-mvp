@@ -270,8 +270,8 @@ async function startDrag(key, pointerX, pointerY) {
     y: pointerY,
     offsetX: iconImg.width / 2,
     offsetY: iconImg.height / 2,
-    scaleX: 0.9,
-    scaleY: 0.9,
+    scaleX: 0.4,
+    scaleY: 0.4,
     opacity: 0.92,
     shadowColor: "black",
     shadowBlur: 16,
@@ -527,6 +527,7 @@ setTimeout(async () => {
     hint.style.opacity = "1";
   });
 })();
+
 
 
 
