@@ -6,7 +6,6 @@
   --bg: #f4f5f3;
   --surface: #ffffff;
   --border: #e4e6e2;
-
   --green: #1e7f3f;
   --green-light: #2e9e52;
   --red: #c62828;
@@ -221,5 +220,6 @@ body{
 .toppingCard.active .trashBtn{
   display:flex;
 }
+
 
 
